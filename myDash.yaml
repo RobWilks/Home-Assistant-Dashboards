@@ -1,0 +1,1071 @@
+apexcharts_card_templates:
+  default:
+    color_list:
+      - dodgerblue
+      - lawngreen
+      - plum
+      - crimson
+      - goldenrod
+  grey_grid:
+    config_templates: default
+    header:
+      show: true
+    apex_config:
+      grid:
+        position: back
+        xaxis:
+          lines:
+            show: true
+        yaxis:
+          lines:
+            show: true
+        strokeDashArray: 0
+        borderColor: '#404040'
+      xaxis:
+        axisBorder:
+          show: true
+          color: '#404040'
+views:
+  - title: Main dashboard
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Energy and Power Today
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: sensor.sumeastarray
+                type: custom:multiple-entity-row
+                name: East Array
+                icon: mdi:solar-panel-large
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.sumeastarray') | float(0) %}
+                        {% if v >= 4.2 %} goldenrod {% elif v >= 3.5 %} yellow {% elif v >= 2.8 %} greenyellow 
+                        {% elif v >= 2.1 %} turquoise {% elif v >= 1.4 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(2) {
+                        color: {% set v = states('sensor.sumeastarray') | float(0) %}
+                        {% if v >= 4.2 %} goldenrod {% elif v >= 3.5 %} yellow {% elif v >= 2.8 %} greenyellow 
+                        {% elif v >= 2.1 %} turquoise {% elif v >= 1.4 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.east_array_energy_today
+                    name: ' '
+                    format: precision1
+                    styles:
+                      color: '#808080'
+                      width: 90px
+                      text-align: right
+                  - entity: sensor.sumeastarray
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+              - entity: sensor.sumsoutharray
+                type: custom:multiple-entity-row
+                name: South Array
+                icon: mdi:solar-panel-large
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.sumsoutharray') | float(0) %}
+                        {% if v >= 1.2 %} goldenrod {% elif v >= 1.0 %} yellow {% elif v >= 0.8 %} greenyellow 
+                        {% elif v >= 0.6 %} turquoise {% elif v >= 0.4 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(2) {
+                        color: {% set v = states('sensor.sumsoutharray') | float(0) %}
+                        {% if v >= 1.2 %} goldenrod {% elif v >= 1.0 %} yellow {% elif v >= 0.8 %} greenyellow 
+                        {% elif v >= 0.6 %} turquoise {% elif v >= 0.4 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.south_array_energy_today
+                    name: ' '
+                    format: precision1
+                    styles:
+                      color: '#808080'
+                      width: 90px
+                      text-align: right
+                  - entity: sensor.sumsoutharray
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+              - entity: sensor.sumwestarray
+                type: custom:multiple-entity-row
+                name: West Array
+                icon: mdi:solar-panel-large
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.sumwestarray') | float(0) %}
+                        {% if v >= 3.3 %} goldenrod {% elif v >= 2.75 %} yellow {% elif v >= 2.2 %} greenyellow 
+                        {% elif v >= 1.65 %} turquoise {% elif v >= 1.1 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(2) {
+                        color: {% set v = states('sensor.sumwestarray') | float(0) %}
+                        {% if v >= 3.3 %} goldenrod {% elif v >= 2.75 %} yellow {% elif v >= 2.2 %} greenyellow 
+                        {% elif v >= 1.65 %} turquoise {% elif v >= 1.1 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.west_array_energy_today
+                    name: ' '
+                    format: precision1
+                    styles:
+                      color: '#808080'
+                      width: 90px
+                      text-align: right
+                  - entity: sensor.sumwestarray
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+              - entity: sensor.wilkinsonsolar_solar_power
+                type: custom:multiple-entity-row
+                name: Total Generation
+                icon: mdi:solar-power-variant-outline
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.wilkinsonsolar_solar_power') | float(0) %}
+                        {% if v >= 7.0 %} goldenrod {% elif v >= 5.5 %} yellow {% elif v >= 4.0 %} greenyellow 
+                        {% elif v >= 2.5 %} turquoise {% elif v >= 1.0 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(2) {
+                        color: {% set v = states('sensor.wilkinsonsolar_solar_power') | float(0) %}
+                        {% if v >= 7.0 %} goldenrod {% elif v >= 5.5 %} yellow {% elif v >= 4.0 %} greenyellow 
+                        {% elif v >= 2.5 %} turquoise {% elif v >= 1.0 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.solar_energy_today
+                    name: ' '
+                    format: precision1
+                    styles:
+                      color: '#808080'
+                      width: 90px
+                      text-align: right
+                  - entity: sensor.wilkinsonsolar_solar_power
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+              - entity: sensor.wilkinsonsolar_load_power
+                type: custom:multiple-entity-row
+                name: House Load
+                icon: mdi:home-lightning-bolt-outline
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.wilkinsonsolar_load_power') | float(0) %}
+                        {% if v < 1 %} #808080 {% elif v < 2 %} deepskyblue {% elif v < 3 %} turquoise
+                        {% elif v < 4 %} greenyellow {% elif v < 5 %} yellow {% elif v < 6 %} goldenrod
+                        {% elif v < 7 %} darkorange {% else %} red {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(2) {
+                        color: {% set v = states('sensor.wilkinsonsolar_load_power') | float(0) %}
+                        {% if v < 1 %} #808080 {% elif v < 2 %} deepskyblue {% elif v < 3 %} turquoise
+                        {% elif v < 4 %} greenyellow {% elif v < 5 %} yellow {% elif v < 6 %} goldenrod
+                        {% elif v < 7 %} darkorange {% else %} red {% endif %};
+                      }
+                entities:
+                  - entity: sensor.load_import_energy_today
+                    name: ' '
+                    format: precision1
+                    styles:
+                      color: '#808080'
+                      width: 90px
+                      text-align: right
+                  - entity: sensor.wilkinsonsolar_load_power
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+              - entity: sensor.grid_export_power
+                type: custom:multiple-entity-row
+                name: Grid Export
+                icon: mdi:transmission-tower-export
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.grid_export_power') | float(0) %}
+                        {% if v >= 7.0 %} goldenrod {% elif v >= 5.5 %} yellow {% elif v >= 4.0 %} greenyellow 
+                        {% elif v >= 2.5 %} turquoise {% elif v >= 1.0 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(2) {
+                        color: {% set v = states('sensor.grid_export_power') | float(0) %}
+                        {% if v >= 7.0 %} goldenrod {% elif v >= 5.5 %} yellow {% elif v >= 4.0 %} greenyellow 
+                        {% elif v >= 2.5 %} turquoise {% elif v >= 1.0 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.grid_export_energy_today
+                    name: ' '
+                    format: precision1
+                    styles:
+                      color: '#808080'
+                      width: 90px
+                      text-align: right
+                  - entity: sensor.grid_export_power
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+              - entity: sensor.grid_import_power
+                type: custom:multiple-entity-row
+                name: Grid Import
+                icon: mdi:transmission-tower-import
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.grid_import_power') | float(0) %}
+                        {% if v >= 7.0 %} goldenrod {% elif v >= 5.5 %} yellow {% elif v >= 4.0 %} greenyellow 
+                        {% elif v >= 2.5 %} turquoise {% elif v >= 1.0 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(2) {
+                        color: {% set v = states('sensor.grid_import_power') | float(0) %}
+                        {% if v >= 7.0 %} goldenrod {% elif v >= 5.5 %} yellow {% elif v >= 4.0 %} greenyellow 
+                        {% elif v >= 2.5 %} turquoise {% elif v >= 1.0 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.grid_import_energy_today
+                    name: ' '
+                    format: precision1
+                    styles:
+                      color: '#808080'
+                      width: 90px
+                      text-align: right
+                  - entity: sensor.grid_import_power
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+          - type: entities
+            title: Forecast
+            show_header_toggle: false
+            entities:
+              - entity: sensor.energy_production_today_remaining
+                type: custom:multiple-entity-row
+                name: PV E left
+                icon: mdi:solar-panel-large
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.energy_production_today_remaining') | float(0) %}
+                        {% if v >= 34 %} goldenrod {% elif v >= 28 %} greenyellow {% elif v >= 22 %} green 
+                        {% elif v >= 17 %} turquoise {% elif v >= 11 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(1) {
+                        color: {% set v = states('sensor.energy_production_today_remaining') | float(0) %}
+                        {% if v >= 34 %} goldenrod {% elif v >= 28 %} greenyellow {% elif v >= 22 %} green 
+                        {% elif v >= 17 %} turquoise {% elif v >= 11 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.energy_production_today_remaining
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - entity: sun.sun
+                    name: ' '
+                    styles:
+                      color: transparent
+                      width: 90px
+              - entity: sensor.energy_production_today_remaining_2
+                type: custom:multiple-entity-row
+                name: PV S left
+                icon: mdi:solar-panel-large
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.energy_production_today_remaining_2') | float(0) %}
+                        {% if v >= 10 %} goldenrod {% elif v >= 8 %} greenyellow {% elif v >= 6 %} green 
+                        {% elif v >= 5 %} turquoise {% elif v >= 3 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(1) {
+                        color: {% set v = states('sensor.energy_production_today_remaining_2') | float(0) %}
+                        {% if v >= 10 %} goldenrod {% elif v >= 8 %} greenyellow {% elif v >= 6 %} green 
+                        {% elif v >= 5 %} turquoise {% elif v >= 3 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.energy_production_today_remaining_2
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - entity: sun.sun
+                    name: ' '
+                    styles:
+                      color: transparent
+                      width: 90px
+              - entity: sensor.energy_production_today_remaining_3
+                type: custom:multiple-entity-row
+                name: PV W left
+                icon: mdi:solar-panel-large
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.energy_production_today_remaining_3') | float(0) %}
+                        {% if v >= 26 %} goldenrod {% elif v >= 22 %} greenyellow {% elif v >= 18 %} green 
+                        {% elif v >= 13 %} turquoise {% elif v >= 9 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(1) {
+                        color: {% set v = states('sensor.energy_production_today_remaining_3') | float(0) %}
+                        {% if v >= 26 %} goldenrod {% elif v >= 22 %} greenyellow {% elif v >= 18 %} green 
+                        {% elif v >= 13 %} turquoise {% elif v >= 9 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.energy_production_today_remaining_3
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - entity: sun.sun
+                    name: ' '
+                    styles:
+                      color: transparent
+                      width: 90px
+              - entity: sensor.total_solar_forecast_remaining
+                type: custom:multiple-entity-row
+                name: PV Forecast left
+                icon: mdi:solar-power-variant-outline
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.total_solar_forecast_remaining') | float(0) %}
+                        {% if v >= 56 %} goldenrod {% elif v >= 44 %} greenyellow {% elif v >= 32 %} green 
+                        {% elif v >= 20 %} turquoise {% elif v >= 8 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(1) {
+                        color: {% set v = states('sensor.total_solar_forecast_remaining') | float(0) %}
+                        {% if v >= 56 %} goldenrod {% elif v >= 44 %} greenyellow {% elif v >= 32 %} green 
+                        {% elif v >= 20 %} turquoise {% elif v >= 8 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.total_solar_forecast_remaining
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - entity: sun.sun
+                    name: ' '
+                    styles:
+                      color: transparent
+                      width: 90px
+              - entity: sensor.total_solar_forecast_tomorrow
+                type: custom:multiple-entity-row
+                name: PV Forecast tomorrow
+                icon: mdi:solar-power-variant-outline
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge {
+                        color: {% set v = states('sensor.total_solar_forecast_tomorrow') | float(0) %}
+                        {% if v >= 56 %} goldenrod {% elif v >= 44 %} greenyellow {% elif v >= 32 %} green 
+                        {% elif v >= 20 %} turquoise {% elif v >= 8 %} deepskyblue {% else %} #808080 {% endif %} !important;
+                      }
+                    .: |
+                      div.entity:nth-child(1) {
+                        color: {% set v = states('sensor.total_solar_forecast_tomorrow') | float(0) %}
+                        {% if v >= 56 %} goldenrod {% elif v >= 44 %} greenyellow {% elif v >= 32 %} green 
+                        {% elif v >= 20 %} turquoise {% elif v >= 8 %} deepskyblue {% else %} #808080 {% endif %};
+                      }
+                entities:
+                  - entity: sensor.total_solar_forecast_tomorrow
+                    name: ' '
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - entity: sun.sun
+                    name: ' '
+                    styles:
+                      color: transparent
+                      width: 90px
+          - type: horizontal-stack
+            cards:
+              - type: button
+                show_name: true
+                show_icon: false
+                card_mod:
+                  style: |
+                    ha-card { 
+                      background: #808080 !important; 
+                      height: 20px !important; 
+                      font-size: 10px;
+                      border-radius: 0px;
+                      border: none;
+                      margin: 0px !important;
+                      color: black;
+                    }
+              - type: button
+                show_icon: false
+                card_mod:
+                  style: |
+                    ha-card { 
+                      background: deepskyblue !important; 
+                      height: 20px !important; 
+                      font-size: 10px;
+                      border-radius: 0px;
+                      border: none;
+                      margin: 0px !important;
+                      color: black;
+                    }
+              - type: button
+                show_icon: false
+                card_mod:
+                  style: |
+                    ha-card { 
+                      background: turquoise !important; 
+                      height: 20px !important; 
+                      font-size: 10px;
+                      border-radius: 0px;
+                      border: none;
+                      margin: 0px !important;
+                      color: black;
+                    }
+              - type: button
+                show_icon: false
+                card_mod:
+                  style: |
+                    ha-card { 
+                      background: greenyellow !important; 
+                      height: 20px !important; 
+                      font-size: 10px;
+                      border-radius: 0px;
+                      border: none;
+                      margin: 0px !important;
+                      color: black;
+                    }
+              - type: button
+                show_icon: false
+                card_mod:
+                  style: |
+                    ha-card { 
+                      background: yellow !important; 
+                      height: 20px !important; 
+                      font-size: 10px;
+                      border-radius: 0px;
+                      border: none;
+                      margin: 0px !important;
+                      color: black;
+                    }
+              - type: button
+                show_icon: false
+                card_mod:
+                  style: |
+                    ha-card { 
+                      background: goldenrod !important; 
+                      height: 20px !important; 
+                      font-size: 10px;
+                      border-radius: 0px;
+                      border: none;
+                      margin: 0px !important;
+                      color: black;
+                    }
+            card_mod:
+              style: |
+                :host {
+                  --grid-card-gap: 0px !important;
+                  --horizontal-stack-card-gap: 0px !important;
+                }                      
+          - type: custom:config-template-card
+            entities:
+              - sensor.total_solar_forecast_tomorrow
+              - sensor.solar_energy_today
+              - sensor.solarpvtoday7dmax
+            variables:
+              SOLAR_MAX: |
+                states['sensor.solarpvtoday7dmax'].state === 'unavailable' || 
+                states['sensor.solarpvtoday7dmax'].state === 'unknown' 
+                ? '50.0' : states['sensor.solarpvtoday7dmax'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 300px
+                yaxis:
+                  max: ${Math.ceil(parseFloat(SOLAR_MAX) / 5) * 5}
+                  decimalsInFloat: 0
+                  forceNiceScale: true
+                  min: 0
+                legend:
+                  show: false
+                marker:
+                  strokeWidth: 0
+              graph_span: 14d
+              span:
+                end: day
+                offset: +1day
+              stacked: true
+              header:
+                show_states: true
+                title: Solar production and Max/Min PV forecast by Day
+                colorize_states: false
+              all_series_config:
+                stroke_width: 0
+                show:
+                  offset_in_name: false
+              series:
+                - entity: sensor.solar_energy_today
+                  type: column
+                  name: Solar production by day
+                  group_by:
+                    func: max
+                    duration: 1day
+                  show:
+                    in_header: true
+                  color: goldenrod
+                - entity: sensor.total_solar_forecast_tomorrow
+                  type: column
+                  name: PV forecast min
+                  offset: '-1day'
+                  group_by:
+                    func: min
+                    duration: 1day
+                  opacity: 0
+                  stack_group: forecast
+                  show:
+                    in_header: true
+                - entity: sensor.total_solar_forecast_tomorrow
+                  type: column
+                  name: PV forecast delta
+                  offset: '-1day'
+                  group_by:
+                    func: delta
+                    duration: 1day
+                  stack_group: forecast
+                  show:
+                    in_header: false
+          - type: custom:config-template-card
+            entities:
+              - sensor.total_solar_forecast_tomorrow
+              - sensor.solar_energy_today
+              - sensor.solarpvtoday7dmax
+            variables:
+              SOLAR_MAX: |
+                states['sensor.solarpvtoday7dmax'].state === 'unavailable' || 
+                states['sensor.solarpvtoday7dmax'].state === 'unknown' 
+                ? '50.0' : states['sensor.solarpvtoday7dmax'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 300px
+                yaxis:
+                  max: ${Math.ceil(parseFloat(SOLAR_MAX) / 5) * 5}
+                  decimalsInFloat: 0
+                  forceNiceScale: true
+                  min: 0
+                marker:
+                  strokeWidth: 0
+              graph_span: 14d
+              span:
+                end: day
+                offset: +1day
+              stacked: false
+              header:
+                title: PV forecast vs production
+              all_series_config:
+                type: line
+                stroke_width: 1
+                show:
+                  extremas: true
+                  offset_in_name: false
+                extend_to: false
+              series:
+                - entity: sensor.total_solar_forecast_tomorrow
+                  name: PV forecast
+                  offset: '-1day'
+                  color: plum
+                  curve: smooth
+                - entity: sensor.solar_energy_today
+                  name: Solar production
+                  color: goldenrod
+                  curve: stepline
+      - type: vertical-stack
+        cards:
+          - type: custom:config-template-card
+            entities:
+              - >-
+                sensor.octopus_energy_electricity_19m1039794_1030000402501_previous_accumulative_cost
+              - >-
+                sensor.octopus_energy_electricity_19m1039794_1050003203800_export_previous_accumulative_cost
+            variables:
+              PRICE_MAX: states['sensor.electricitycost14dmax'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 200px
+                yaxis:
+                  max: ${Math.ceil(parseFloat(PRICE_MAX) / 2) * 2}
+                  decimalsInFloat: 0
+                  forceNiceScale: true
+              graph_span: 14d
+              span:
+                end: day
+              header:
+                title: Electricity Import and Export (£)
+              all_series_config:
+                offset: +1day
+                stroke_width: 1
+                show:
+                  extremas: true
+                  offset_in_name: false
+              series:
+                - entity: >-
+                    sensor.octopus_energy_electricity_19m1039794_1030000402501_previous_accumulative_cost
+                  color: magenta
+                  type: column
+                  name: Import cost (£)
+                  statistics:
+                    type: state
+                    period: day
+                - entity: >-
+                    sensor.octopus_energy_electricity_19m1039794_1050003203800_export_previous_accumulative_cost
+                  color: deeppink
+                  type: column
+                  name: Export cost (£)
+                  statistics:
+                    type: state
+                    period: day
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            apex_config:
+              chart:
+                height: 200px
+              yaxis:
+                decimalsInFloat: 0
+                forceNiceScale: true
+              plotOptions:
+                bar:
+                  columnWidth: 40%
+            graph_span: 14d
+            span:
+              end: day
+            header:
+              title: Electricity Export - Import (£)
+            all_series_config:
+              offset: +1day
+              stroke_width: 1
+              show:
+                extremas: true
+                offset_in_name: false
+            series:
+              - entity: sensor.net_electricity_cost
+                yaxis_id: day
+                float_precision: 2
+                type: column
+                name: Export - Import cost (£)
+                color: darkviolet
+                statistics:
+                  type: state
+                  period: day
+      - type: vertical-stack
+        cards:
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            graph_span: 1d
+            apex_config:
+              chart:
+                height: 600px
+            header:
+              title: Grid Import/Export, PV production and Load
+            yaxis:
+              - id: power
+                min: -6
+                max: 6
+                decimals: 0
+                apex_config:
+                  tickAmount: 6
+                  axisBorder:
+                    show: true
+                    color: '#404040'
+            all_series_config:
+              stroke_width: 1
+              extend_to: false
+              show:
+                extremas: true
+            series:
+              - entity: sensor.wilkinsonsolar_site_power
+                name: Grid export
+                yaxis_id: power
+                type: line
+                curve: straight
+                invert: true
+                color: magenta
+              - entity: sensor.wilkinsonsolar_solar_power
+                name: Solar Production
+                yaxis_id: power
+                type: line
+                curve: straight
+                color: goldenrod
+              - entity: sensor.wilkinsonsolar_load_power
+                name: Load
+                yaxis_id: power
+                type: line
+                curve: straight
+                color: turquoise
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            apex_config:
+              chart:
+                height: 200px
+            graph_span: 1d
+            header:
+              show: true
+              title: Battery charge %
+            yaxis:
+              - id: percent
+                min: 0
+                max: 100
+                decimals: 0
+                apex_config:
+                  axisBorder:
+                    show: true
+                    color: '#404040'
+            all_series_config:
+              stroke_width: 1
+              extend_to: false
+              show:
+                extremas: true
+            series:
+              - entity: sensor.wilkinsonsolar_charge
+                yaxis_id: percent
+                type: area
+                name: '% charged'
+                color: lawngreen
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            apex_config:
+              chart:
+                height: 200px
+            graph_span: 7d
+            header:
+              show: true
+              title: Grid Power CO2 Intensity (gCO2/kWh)
+            yaxis:
+              - id: percent
+                min: 50
+                max: 350
+                decimals: 0
+                apex_config:
+                  axisBorder:
+                    show: true
+                    color: '#404040'
+                  tickAmount: 6
+            all_series_config:
+              stroke_width: 1
+              extend_to: false
+              show:
+                extremas: true
+            series:
+              - entity: sensor.electricity_maps_co2_intensity
+                yaxis_id: percent
+                type: line
+                name: CO2 Intensity
+                color: red
+      - type: vertical-stack
+        cards:
+          - type: custom:weather-chart-card
+            entity: weather.forecast_home
+            show_main: true
+            show_temperature: true
+            show_current_condition: true
+            show_attributes: true
+            show_time: false
+            show_time_seconds: false
+            show_day: false
+            show_date: false
+            show_humidity: true
+            show_pressure: true
+            show_wind_direction: true
+            show_wind_speed: true
+            show_sun: true
+            show_feels_like: false
+            show_dew_point: false
+            show_wind_gust_speed: false
+            show_visibility: false
+            show_last_changed: false
+            use_12hour_format: false
+            icons_size: 25
+            animated_icons: false
+            icon_style: style1
+            autoscroll: false
+            forecast:
+              precipitation_type: rainfall
+              show_probability: true
+              labels_font_size: '11'
+              precip_bar_size: '100'
+              style: style1
+              show_wind_forecast: true
+              condition_icons: true
+              round_temp: false
+              type: hourly
+              number_of_forecasts: '0'
+              disable_animation: false
+            units:
+              speed: ''
+          - type: custom:weather-chart-card
+            entity: weather.forecast_home
+            show_main: false
+            show_temperature: false
+            show_current_condition: false
+            show_attributes: false
+            show_time: false
+            show_time_seconds: false
+            show_day: false
+            show_date: false
+            show_humidity: true
+            show_pressure: true
+            show_wind_direction: true
+            show_wind_speed: true
+            show_sun: true
+            show_feels_like: false
+            show_dew_point: false
+            show_wind_gust_speed: false
+            show_visibility: false
+            show_last_changed: false
+            use_12hour_format: false
+            icons_size: 25
+            animated_icons: false
+            icon_style: style1
+            autoscroll: false
+            forecast:
+              precipitation_type: rainfall
+              show_probability: false
+              labels_font_size: '11'
+              precip_bar_size: '100'
+              style: style1
+              show_wind_forecast: true
+              condition_icons: true
+              round_temp: false
+              type: daily
+              number_of_forecasts: '0'
+              disable_animation: false
+            units:
+              speed: ''
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            apex_config:
+              chart:
+                height: 200px
+            graph_span: 7d
+            header:
+              show: true
+              title: Pressure (mBar)
+            yaxis:
+              - id: percent
+                min: 970
+                max: 1030
+                decimals: 0
+                apex_config:
+                  axisBorder:
+                    show: true
+                    color: '#404040'
+                  tickAmount: 6
+            all_series_config:
+              stroke_width: 1
+              extend_to: false
+              show:
+                extremas: true
+            series:
+              - entity: sensor.lounge_pressure
+                yaxis_id: percent
+                type: line
+                name: Lounge Pressure
+              - entity: sensor.main_bedroom_2_pressure
+                yaxis_id: percent
+                type: line
+                name: Main Bedroom Pressure
+      - type: vertical-stack
+        title: Heat pump
+        cards:
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            apex_config:
+              chart:
+                height: 400px
+            graph_span: 7d
+            span:
+              end: day
+            header:
+              title: Inside and Outside Temperature | Inside Humidity
+            yaxis:
+              - id: temps
+                min: 0
+                max: 25
+                decimals: 0
+              - id: humid
+                min: 35
+                max: 60
+                decimals: 0
+                opposite: true
+            all_series_config:
+              stroke_width: 1
+              extend_to: false
+              show:
+                extremas: true
+            series:
+              - entity: sensor.stiebel_eltron_isg_actual_room_temperature_hk_1
+                yaxis_id: temps
+                type: line
+                name: Room Temperature
+                group_by:
+                  func: avg
+                  duration: 10min
+                color: crimson
+              - entity: sensor.stiebel_eltron_isg_outdoor_temperature
+                yaxis_id: temps
+                type: line
+                name: Outside Temperature
+                group_by:
+                  func: avg
+                  duration: 10min
+                color: dodgerblue
+              - entity: sensor.stiebel_eltron_isg_humidity_hk_1
+                yaxis_id: humid
+                type: line
+                name: Room Humidity
+                group_by:
+                  func: avg
+                  duration: 10min
+                color: lawngreen
+          - type: entities
+            entities:
+              - entity: input_boolean.sg_dummy_switch
+              - entity: input_boolean.sg_run_today
+              - entity: switch.stiebel_eltron_isg_sg_ready_input_1
+              - entity: switch.stiebel_eltron_isg_sg_ready_input_2
+              - entity: sensor.stiebel_eltron_isg_sg_ready_state
+              - entity: switch.stiebel_eltron_isg_sg_ready_active
+            title: Smart Grid boost controls
+            show_header_toggle: false
+      - type: vertical-stack
+        cards:
+          - type: custom:bar-card
+            theme:
+              bar-card-border-radius: 8px
+            title: One Year Totals _______________ 15000 kWh
+            max: 15000
+            min: 0
+            decimal: 0
+            height: 28px
+            width: 110%
+            unit_of_measurement: ' '
+            direction: right
+            positions:
+              icon: inside
+              name: inside
+              value: inside
+            card_mod:
+              style: |
+                #states {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 2px; /* This creates an even 15px gap between all items */
+                }  
+                ha-icon {
+                          opacity: 0.8 !important;
+                        } 
+                   
+            entities:
+              - entity: sensor.producedsolaryear
+                name: Tesla Produced solar
+                color: goldenrod
+              - entity: sensor.energy_production_year
+                name: Envoy produced solar
+                color: goldenrod
+              - entity: sensor.gridimportyear
+                name: Tesla Grid import
+                color: '#808080'
+              - entity: sensor.net_energy_consumption_year
+                name: Envoy net consumption
+                color: '#808080'
+              - entity: sensor.electricitymeterimportoneyear
+                name: Octopus grid import
+                color: magenta
+              - entity: sensor.gridexportyear
+                name: Tesla Grid export
+                color: dodgerblue
+              - entity: sensor.net_energy_production_year
+                name: Envoy net production
+                color: dodgerblue
+              - entity: sensor.electricitymeterexportoneyear
+                name: Octopus grid export
+                color: deeppink
+              - entity: sensor.batteryimportyear
+                name: Battery import
+                color: lawngreen
+              - entity: sensor.batteryexportyear
+                name: Battery export
+                color: green
+              - entity: sensor.loadimportyear
+                name: Tesla Load import
+                color: turquoise
+              - entity: sensor.energy_consumption_year
+                name: Envoy load import
+                color: turquoise
+              - entity: sensor.producedheatingyear
+                name: Produced heating
+                color: crimson
+              - entity: sensor.consumedheatingyear
+                name: Consumed heating
+                color: magenta
+              - entity: sensor.producedwaterheatingyear
+                name: Produced DHW heating
+                color: crimson
+              - entity: sensor.consumedwaterheatingyear
+                name: Consumed DHW heating
+                color: magenta
+        columns: 1
+    badges: []

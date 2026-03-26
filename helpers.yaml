@@ -1,0 +1,145 @@
+  - platform: statistics
+    name:  stat_mainBedroom24hMeanTemp
+    unique_id: 230d4423-5c4f-4a4f-9edf-78d92b48d922
+    entity_id: sensor.atc_23b4_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24
+
+
+  - platform: statistics
+    name:  stat_juliaBedroom24hMeanTemp
+    unique_id: 19e95e76-0c19-4578-9025-734a50aa33e8
+    entity_id: sensor.atc_04d6_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24
+
+  - platform: statistics
+    name:  stat_musicRoom24hMeanTemp
+    unique_id: a49ecabb-0fc6-4331-a3a0-11639ebecbf5
+    entity_id: sensor.atc_34ae_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24      
+      
+  - platform: statistics
+    name:  stat_hall24hMeanTemp
+    unique_id: f07d4abb-11e3-4ab9-a756-a7b6421cf957
+    entity_id: sensor.stiebel_eltron_isg_actual_room_temperature_hk_1
+    state_characteristic: mean
+    max_age:
+      hours: 24      
+
+  - platform: statistics
+    name:  stat_lounge24hMeanTemp
+    unique_id: b8869252-f195-41d9-a031-fa69bef727a0
+    entity_id: sensor.mj6_fc99_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24          
+      
+  - platform: statistics
+    name:  stat_office24hMeanTemp
+    unique_id: a905b231-549c-4cb0-bce2-bfc8188fb0eb
+    entity_id: sensor.diy_sensor_4b62_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24
+      
+  - platform: statistics
+    name:  stat_bathroom24hMeanTemp
+    unique_id: fd360b24-6705-4929-8b6f-1fc8375e8f41
+    entity_id: sensor.atc_632b_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24 
+      
+  - platform: statistics
+    name:  stat_ensuiteBathroom24hMeanTemp
+    unique_id: cb57dfae-03e8-434c-bd79-86e50f98fc04
+    entity_id: sensor.atc_e6fc_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24 
+      
+  - platform: statistics
+    name:  stat_kitchen24hMeanTemp
+    unique_id: fbefb7e5-b85e-4d95-800d-c2c44f94d5d0
+    entity_id: sensor.atc_6a43_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24 
+      
+  - platform: statistics
+    name:  stat_mainBedroom24hMeanTemp
+    unique_id: d083b8c3-30a2-4abb-80d3-2ae6fa85fb76
+    entity_id: sensor.esp32_blink_bme280_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24
+
+
+  - platform: statistics
+    name:  stat_juliaBedroom24hMeanHumidity
+    unique_id: 04017037-71b0-46fb-a786-328b6fc9f2a8
+    entity_id: sensor.atc_04d6_humidity
+    state_characteristic: mean
+    max_age:
+      hours: 24
+
+  - platform: statistics
+    name:  stat_musicRoom24hMeanHumidity
+    unique_id: 2e48bb1c-53d0-41e3-a39f-7177c9597f6b
+    entity_id: sensor.atc_34ae_humidity
+    state_characteristic: mean
+    max_age:
+      hours: 24      
+      
+  - platform: statistics
+    name:  stat_hall24hMeanHumidity
+    unique_id: 5de7e0d3-b69a-4242-b8f8-212f4cae7f06
+    entity_id: sensor.stiebel_eltron_isg_humidity_hk_1
+    state_characteristic: mean
+    max_age:
+      hours: 24      
+
+  - platform: statistics
+    name:  stat_lounge24hMeanHumidity
+    unique_id: 81a5d0c4-d84a-45f9-8a9e-2783cb8cadbb
+    entity_id: sensor.mj6_fc99_humidity
+    state_characteristic: mean
+    max_age:
+      hours: 24          
+
+  - platform: statistics
+    name:  stat_bathroom24hMeanHumidity
+    unique_id: a3d91040-ac64-41a3-b957-115dd30cf665
+    entity_id: sensor.atc_632b_humidity
+    state_characteristic: mean
+    max_age:
+      hours: 24 
+      
+  - platform: statistics
+    name:  stat_ensuiteBathroom24hMeanHumidity
+    unique_id: d0c3aa43-83cd-4955-9fb8-963499a9b632
+    entity_id: sensor.atc_e6fc_humidity
+    state_characteristic: mean
+    max_age:
+      hours: 24 
+      
+  - platform: statistics
+    name:  stat_kitchen24hMeanHumidity
+    unique_id: aa54d009-0fed-4784-a9d1-7de50b8f2621
+    entity_id: sensor.atc_6a43_humidity
+    state_characteristic: mean
+    max_age:
+      hours: 24 
+      
+  - platform: statistics
+    name:  stat_mainBedroom24hMeanHumidity
+    unique_id: 8170f7bc-5e0e-4934-999f-f4430c440f85
+    entity_id: sensor.esp32_blink_bme280_humidity
+    state_characteristic: mean
+    max_age:
+      hours: 24

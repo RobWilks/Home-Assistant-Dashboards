@@ -1,0 +1,481 @@
+apexcharts_card_templates:
+  default:
+    color_list:
+      - dodgerblue
+      - lawngreen
+      - plum
+      - crimson
+      - goldenrod
+  grey_grid:
+    config_templates: default
+    header:
+      show: true
+    apex_config:
+      grid:
+        position: back
+        xaxis:
+          lines:
+            show: true
+        yaxis:
+          lines:
+            show: true
+        strokeDashArray: 0
+        borderColor: '#404040'
+      xaxis:
+        axisBorder:
+          show: true
+          color: '#404040'
+views:
+  - title: Records
+    sections:
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.stat_max_electricity_consumption
+                type: custom:multiple-entity-row
+                name: Max Electricity Import
+                show_state: false
+                icon: mdi:transmission-tower-import
+                entities:
+                  - attribute: max_energy
+                    name: ''
+                    unit: kWh
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: magenta; }
+              - entity: sensor.stat_max_grid_import
+                type: custom:multiple-entity-row
+                name: Max Grid Import
+                show_state: false
+                icon: mdi:transmission-tower-import
+                entities:
+                  - attribute: max_energy
+                    name: ''
+                    unit: kWh
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: magenta; }
+              - entity: sensor.stat_max_daily_electricity_cost
+                type: custom:multiple-entity-row
+                name: Max Daily Import Cost (£)
+                show_state: false
+                icon: mdi:currency-gbp
+                entities:
+                  - attribute: max_cost
+                    name: ''
+                    unit: ''
+                    format: precision2
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: green; }
+              - entity: sensor.stat_max_load_import
+                type: custom:multiple-entity-row
+                name: Max Electricity Use
+                show_state: false
+                icon: mdi:kettle
+                entities:
+                  - attribute: max_energy
+                    name: ''
+                    unit: kWh
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: deeppink; }
+              - entity: sensor.stat_max_hp_consumed
+                type: custom:multiple-entity-row
+                name: Max ASHP Electricity
+                show_state: false
+                icon: mdi:heat-pump
+                entities:
+                  - attribute: total_daily_consumption
+                    name: ''
+                    unit: kWh
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: deeppink; }
+              - entity: sensor.stat_max_produced_heating
+                type: custom:multiple-entity-row
+                name: Max Heating
+                show_state: false
+                icon: mdi:heat-pump
+                entities:
+                  - attribute: total_daily_consumption
+                    name: ''
+                    unit: kWh
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: crimson; }
+              - entity: sensor.stat_max_electricity_export
+                type: custom:multiple-entity-row
+                name: Max Export
+                show_state: false
+                icon: mdi:transmission-tower-export
+                entities:
+                  - attribute: max_energy
+                    name: ''
+                    unit: kWh
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: orange; }
+              - entity: sensor.stat_max_daily_electricity_export_cost
+                type: custom:multiple-entity-row
+                name: Max Daily Export (£)
+                show_state: false
+                icon: mdi:currency-gbp
+                entities:
+                  - attribute: max_cost
+                    name: ''
+                    unit: ''
+                    format: precision2
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: green; }
+              - entity: sensor.stat_max_solar_export
+                type: custom:multiple-entity-row
+                name: Max Solar Production
+                show_state: false
+                icon: mdi:solar-panel-large
+                entities:
+                  - attribute: max_energy
+                    name: ''
+                    unit: kWh
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: orange; }
+              - entity: sensor.stat_max_temperature_outdoor
+                type: custom:multiple-entity-row
+                name: Max Outside Temp
+                show_state: false
+                icon: mdi:thermometer
+                entities:
+                  - attribute: max_temp
+                    name: ''
+                    unit: °C
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: crimson; }
+              - entity: sensor.stat_min_temperature_outdoor
+                type: custom:multiple-entity-row
+                name: Min Outside Temp
+                show_state: false
+                icon: mdi:thermometer
+                entities:
+                  - attribute: min_temp
+                    name: ''
+                    unit: °C
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: lightblue; }
+              - entity: sensor.stat_max_diurnal_range_outdoor
+                type: custom:multiple-entity-row
+                name: Max Diurnal Range
+                show_state: false
+                icon: mdi:thermometer
+                entities:
+                  - attribute: temperature_range
+                    name: ''
+                    unit: °C
+                    format: precision1
+                    styles:
+                      width: 90px
+                      text-align: right
+                  - attribute: observation_date
+                    name: ''
+                    format: date
+                    styles:
+                      width: 90px
+                      text-align: right
+                      font-size: 12px
+                card_mod:
+                  style: |
+                    :host { --card-mod-icon-color: darkviolet; }
+          - type: markdown
+            content: >-
+              Records are for the period of the last 365 days.
+
+              Minima and maxima are calculated on the set of hourly means for
+              the period.
+
+              Electricity export is less than solar production since some
+              production will be used on site.
+
+              Electricity import is less than site use since some of the load is
+              supplied by solar production.
+
+              Charge and discharge of the battery also affects the daily
+              balance.
+      - type: grid
+        cards:
+          - type: custom:config-template-card
+            entities:
+              - sensor.stat_max_electricity_import_cost_month
+            variables:
+              COST_MAX: >-
+                states['sensor.stat_max_electricity_import_cost_month'].attributes.max_cost
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 250px
+                yaxis:
+                  max: ${Math.ceil(parseFloat(COST_MAX) / 50) * 50 }
+                  min: 0
+                  decimalsInFloat: 0
+                  forceNiceScale: true
+              graph_span: 12month
+              span:
+                start: month
+                offset: '-12month'
+              header:
+                show: true
+                title: Monthly Electricity Import Cost (£)
+              series:
+                - entity: sensor.stat_max_electricity_import_cost_month
+                  name: Total Cost
+                  type: column
+                  color: magenta
+                  data_generator: >
+                    return entity.attributes.monthly_history.split(',').map(item
+                    => {
+                      var parts = item.split(':');
+                      var d = parts[0].split('-');
+                      return [new Date(d[0], d[1] - 1, 1).getTime(), parseFloat(parts[1])];
+                    }).sort((a, b) => a[0] - b[0]);
+                  show:
+                    datalabels: true
+          - type: custom:config-template-card
+            entities:
+              - sensor.stat_max_electricity_export_cost_month
+            variables:
+              COST_MAX: >-
+                states['sensor.stat_max_electricity_export_cost_month'].attributes.max_cost
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 250px
+                yaxis:
+                  max: ${Math.ceil(parseFloat(COST_MAX) / 50) * 50 }
+                  min: 0
+                  decimalsInFloat: 0
+                  forceNiceScale: true
+              graph_span: 12month
+              span:
+                start: month
+                offset: '-12month'
+              header:
+                show: true
+                title: Monthly Electricity Export Credit (£)
+              series:
+                - entity: sensor.stat_max_electricity_export_cost_month
+                  name: Total Export
+                  type: column
+                  color: deeppink
+                  data_generator: >
+                    return entity.attributes.monthly_history.split(',').map(item
+                    => {
+                      var parts = item.split(':');
+                      var d = parts[0].split('-');
+                      return [new Date(d[0], d[1] - 1, 1).getTime(), parseFloat(parts[1])];
+                    }).sort((a, b) => a[0] - b[0]);
+                  show:
+                    datalabels: true
+          - type: custom:config-template-card
+            entities:
+              - sensor.stat_max_solar_export_month
+            variables:
+              SOLAR_MAX: >-
+                states['sensor.stat_max_solar_export_month'].attributes.max_production
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 250px
+                yaxis:
+                  max: ${Math.ceil(parseFloat(SOLAR_MAX) / 500) * 500 }
+                  min: 0
+                  decimalsInFloat: 0
+                  forceNiceScale: true
+              graph_span: 12month
+              span:
+                start: month
+                offset: '-12month'
+              header:
+                show: true
+                title: Monthly Solar Production (kWh)
+              series:
+                - entity: sensor.stat_max_solar_export_month
+                  name: Solar Generated
+                  type: column
+                  color: goldenrod
+                  data_generator: >
+                    return entity.attributes.monthly_history.split(',').map(item
+                    => {
+                      var parts = item.split(':');
+                      var d = parts[0].split('-');
+                      return [new Date(d[0], d[1] - 1, 1).getTime(), parseFloat(parts[1])];
+                    }).sort((a, b) => a[0] - b[0]);
+                  show:
+                    datalabels: true
+          - type: custom:config-template-card
+            entities:
+              - sensor.stat_mean_heating_cop_month
+            variables:
+              COP_DATA: states['sensor.stat_mean_heating_cop_month'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 250px
+                yaxis:
+                  max: 10
+                  min: 0
+                  decimalsInFloat: 0
+                  forceNiceScale: true
+              graph_span: 12month
+              span:
+                start: month
+                offset: '-12month'
+              header:
+                show: true
+                title: Monthly COP
+              series:
+                - entity: sensor.stat_mean_heating_cop_month
+                  name: COP
+                  type: column
+                  color: crimson
+                  data_generator: >
+                    return entity.attributes.monthly_history.split(',').map(item
+                    => {
+                      var parts = item.split(':');
+                      var d = parts[0].split('-');
+                      return [new Date(d[0], d[1] - 1, 1).getTime(), parseFloat(parts[1])];
+                    }).sort((a, b) => a[0] - b[0]);
+                  show:
+                    datalabels: true
+    type: sections
+    max_columns: 4
+    cards: []

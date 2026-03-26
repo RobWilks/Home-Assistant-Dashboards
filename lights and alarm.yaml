@@ -1,0 +1,232 @@
+views:
+  - cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:mushroom-light-card
+            name: Alarm set
+            entity: input_boolean.alarm_set
+          - type: custom:mushroom-light-card
+            name: Alarm triggered
+            entity: input_boolean.alarm_triggered
+          - type: custom:mushroom-light-card
+            name: All Lights Off
+            entity: input_boolean.all_lights_off
+          - type: custom:mushroom-light-card
+            name: Porch Light
+            entity: switch.porch_light
+          - type: custom:mushroom-light-card
+            name: Lounge Light Main
+            entity: switch.lounge_light_main
+          - type: custom:mushroom-light-card
+            name: Lounge Light One
+            entity: switch.lounge_light_one
+          - type: custom:mushroom-light-card
+            name: Lounge Light Two
+            entity: switch.lounge_light_two
+          - type: custom:mushroom-light-card
+            name: Office Light
+            entity: switch.office_light_main
+          - type: custom:mushroom-light-card
+            name: Hall Light One
+            entity: switch.hall_light_one
+          - type: custom:mushroom-light-card
+            name: Hall Light Two
+            entity: switch.hall_light_two
+          - type: custom:mushroom-light-card
+            name: Music Room Light Main
+            entity: switch.music_room_light_main
+          - type: custom:mushroom-light-card
+            name: Music Room Light One
+            entity: switch.music_room_light_one
+          - type: custom:mushroom-light-card
+            entity: input_boolean.awayfromhome
+            name: Yellow = away
+          - type: custom:mushroom-light-card
+            entity: device_tracker.sm_a505fn
+            name: Where's Rob?
+          - type: custom:mushroom-media-player-card
+            entity: media_player.speakers
+            name: Mouche
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Alarm PIR Status
+            show_header_toggle: false
+            state_color: false
+            entities:
+              - entity: binary_sensor.alarmsensor_5d1b24_hall_pir_front_door_contact
+                type: custom:multiple-entity-row
+                name: Hall PIR/Door
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge { color: DeepSkyBlue !important; }
+                entities:
+                  - attribute: last_changed
+                    format: relative
+                    name: ' '
+                    styles:
+                      color: DeepSkyBlue
+                  - entity: sensor.alarm_hall_stat
+                    name: ' '
+                    styles:
+                      color: DeepSkyBlue
+              - entity: binary_sensor.alarmsensor_5d1b24_kitchen_pir
+                type: custom:multiple-entity-row
+                name: Kitchen PIR
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge { color: Turquoise !important; }
+                entities:
+                  - attribute: last_changed
+                    format: relative
+                    name: ' '
+                    styles:
+                      color: Turquoise
+                  - entity: sensor.alarm_kitchen_stat
+                    name: ' '
+                    styles:
+                      color: Turquoise
+              - entity: binary_sensor.alarmsensor_5d1b24_landing_pir
+                type: custom:multiple-entity-row
+                name: Landing PIR
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge { color: Green !important; }
+                entities:
+                  - attribute: last_changed
+                    format: relative
+                    name: ' '
+                    styles:
+                      color: Green
+                  - entity: sensor.alarm_landing_stat
+                    name: ' '
+                    styles:
+                      color: Green
+              - entity: binary_sensor.alarmsensor_5d1b24_lounge_pir_contact
+                type: custom:multiple-entity-row
+                name: Lounge PIR
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge { color: GreenYellow !important; }
+                entities:
+                  - attribute: last_changed
+                    format: relative
+                    name: ' '
+                    styles:
+                      color: GreenYellow
+                  - entity: sensor.alarm_lounge_stat
+                    name: ' '
+                    styles:
+                      color: GreenYellow
+              - entity: binary_sensor.alarmsensor_5d1b24_music_room_pir
+                type: custom:multiple-entity-row
+                name: Music Room PIR
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge { color: Gold !important; }
+                entities:
+                  - attribute: last_changed
+                    format: relative
+                    name: ' '
+                    styles:
+                      color: Gold
+                  - entity: sensor.alarm_music_room_stat
+                    name: ' '
+                    styles:
+                      color: Gold
+              - entity: binary_sensor.alarmsensor_5d1b24_playroom_pir
+                type: custom:multiple-entity-row
+                name: Playroom PIR
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge { color: DarkOrange !important; }
+                entities:
+                  - attribute: last_changed
+                    format: relative
+                    name: ' '
+                    styles:
+                      color: DarkOrange
+                  - entity: sensor.alarm_play_room_stat
+                    name: ' '
+                    styles:
+                      color: DarkOrange
+              - entity: binary_sensor.alarmsensor_5d1b24_utility_room_contact
+                type: custom:multiple-entity-row
+                name: Utility Contact
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge { color: Red !important; }
+                entities:
+                  - attribute: last_changed
+                    format: relative
+                    name: ' '
+                    styles:
+                      color: Red
+                  - entity: sensor.alarm_utility_room_stat
+                    name: ' '
+                    styles:
+                      color: Red
+          - type: custom:apexcharts-card
+            header:
+              show: false
+            graph_span: 12h
+            now:
+              show: true
+              label: Now
+              color: crimson
+            yaxis:
+              - show: false
+                min: 0
+                max: 14
+            apex_config:
+              legend:
+                show: false
+              grid:
+                show: false
+              chart:
+                height: 400px
+            all_series_config:
+              type: area
+              curve: stepline
+              stroke_width: 1
+              opacity: 0.1
+              fill_raw: last
+            series:
+              - entity: binary_sensor.alarmsensor_5d1b24_hall_pir_front_door_contact
+                color: DeepSkyBlue
+                transform: 'return x === ''on'' ? 13.9 : 12.1;'
+              - entity: binary_sensor.alarmsensor_5d1b24_kitchen_pir
+                color: Turquoise
+                transform: 'return x === ''on'' ? 11.9 : 10.1;'
+              - entity: binary_sensor.alarmsensor_5d1b24_landing_pir
+                color: Green
+                transform: 'return x === ''on'' ? 9.9 : 8.1;'
+              - entity: binary_sensor.alarmsensor_5d1b24_lounge_pir_contact
+                color: GreenYellow
+                transform: 'return x === ''on'' ? 7.9 : 6.1;'
+              - entity: binary_sensor.alarmsensor_5d1b24_music_room_pir
+                color: Gold
+                transform: 'return x === ''on'' ? 5.9 : 4.1;'
+              - entity: binary_sensor.alarmsensor_5d1b24_playroom_pir
+                color: DarkOrange
+                transform: 'return x === ''on'' ? 3.9 : 2.1;'
+              - entity: binary_sensor.alarmsensor_5d1b24_utility_room_contact
+                color: Red
+                transform: 'return x === ''on'' ? 1.9 : 0.1;'
+      - type: map
+        entities:
+          - entity: device_tracker.sm_a505fn

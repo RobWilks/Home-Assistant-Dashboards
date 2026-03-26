@@ -1,0 +1,54 @@
+  
+  
+# sum inverter power for each array
+# individual inverters are grouped by array location and report value in W
+# make sure it is a Sensor Group and check the box "Ignore non-numeric states". This stops error logs caused by sensor unavailable.
+# we want total power per array in kW
+
+# east array
+- trigger:
+    - platform: state
+      entity_id: sensor.east_array
+  sensor:
+    - name: sumEastArray
+      unique_id: a8044677-af37-47ad-a6e7-a845f31d27ad
+      unit_of_measurement: "kW"
+      device_class: power
+      # We just take the group's sum and divide by 1000
+      state: >
+        {% set total = states('sensor.east_array') | float(0) %}
+        {{ (total / 1000) | round(2) }}
+      availability: >
+        {{ is_number(states('sensor.east_array')) }}
+
+
+# south array
+- trigger:
+    - platform: state
+      entity_id: sensor.south_array
+  sensor:
+    - name: sumSouthArray
+      unique_id: 69ca4657-4d78-4f40-8d8d-f88824a0053b
+      unit_of_measurement: "kW"
+      device_class: power
+      state: >
+        {% set total = states('sensor.south_array') | float(0) %}
+        {{ (total / 1000) | round(2) }}
+      availability: >
+        {{ is_number(states('sensor.south_array')) }}
+
+
+# west array
+- trigger:
+    - platform: state
+      entity_id: sensor.west_array
+  sensor:
+    - name: sumWestArray
+      unique_id: 2c9e7ca8-59bb-428c-ac3c-a207d9e8da6b
+      unit_of_measurement: "kW"
+      device_class: power
+      state: >
+        {% set total = states('sensor.west_array') | float(0) %}
+        {{ (total / 1000) | round(2) }}
+      availability: >
+        {{ is_number(states('sensor.west_array')) }}            

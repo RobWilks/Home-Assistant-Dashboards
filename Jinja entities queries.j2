@@ -1,0 +1,18 @@
+#check update times of sql one day mean
+
+{% set entities = states 
+  | selectattr('entity_id', 'search', '^sensor.stat_mean_') 
+  | sort(attribute='last_updated', reverse=true) 
+  | list %}
+
+{% for entity in entities %}
+- {{ entity.name }}: {{ as_timestamp(entity.last_updated) | timestamp_custom('%H:%M') }}
+{%- endfor %}
+
+
+{% set entities = states.sensor | selectattr('entity_id', 'search', '_ago$') | list %}
+  | Sensor Name | Last Updated |
+  | :--- | :--- |
+  {% for entity in entities -%}
+  | {{ entity.name }} | {{ as_timestamp(entity.last_updated) | timestamp_custom('%H:%M') }} |
+  {% endfor %}

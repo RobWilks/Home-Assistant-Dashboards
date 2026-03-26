@@ -1,0 +1,292 @@
+apexcharts_card_templates:
+  default:
+    color_list:
+      - dodgerblue
+      - lawngreen
+      - plum
+      - crimson
+      - goldenrod
+  grey_grid:
+    config_templates: default
+    header:
+      show: true
+    apex_config:
+      grid:
+        position: back
+        xaxis:
+          lines:
+            show: true
+        yaxis:
+          lines:
+            show: true
+        strokeDashArray: 0
+        borderColor: '#404040'
+      xaxis:
+        axisBorder:
+          show: true
+          color: '#404040'
+views:
+  - title: Greenhouse
+    cards:
+      - type: custom:apexcharts-card
+        config_templates: grey_grid
+        apex_config:
+          chart:
+            height: 400px
+        graph_span: 7d
+        span:
+          end: day
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        yaxis:
+          - id: temps
+            min: -10
+            max: 35
+            decimals: 0
+            apex_config:
+              tickAmount: 9
+          - id: humid
+            min: 0
+            max: 90
+            apex_config:
+              tickAmount: 9
+            decimals: 0
+            opposite: true
+        all_series_config:
+          stroke_width: 1
+          extend_to: false
+          show:
+            extremas: true
+            legend_value: false
+        series:
+          - entity: sensor.mj6_fc99_temperature
+            yaxis_id: temps
+            type: line
+            name: Greenhouse Temperature
+            group_by:
+              func: avg
+              duration: 10min
+            color: crimson
+          - entity: sensor.stiebel_eltron_isg_outdoor_temperature
+            yaxis_id: temps
+            type: line
+            name: Outside Temperature
+            group_by:
+              func: avg
+              duration: 10min
+            color: dodgerblue
+          - entity: sensor.mj6_fc99_humidity
+            yaxis_id: humid
+            type: line
+            name: Greenhouse Humidity
+            group_by:
+              func: avg
+              duration: 10min
+            color: lawngreen
+      - type: custom:apexcharts-card
+        config_templates: grey_grid
+        apex_config:
+          chart:
+            height: 300px
+        graph_span: 1d
+        span:
+          end: hour
+        header:
+          show: false
+          show_states: true
+          colorize_states: true
+        yaxis:
+          - id: temps
+            min: -10
+            max: 35
+            decimals: 0
+            apex_config:
+              tickAmount: 9
+          - id: humid
+            min: 0
+            max: 90
+            apex_config:
+              tickAmount: 9
+            decimals: 0
+            opposite: true
+        all_series_config:
+          stroke_width: 1
+          extend_to: false
+          show:
+            extremas: true
+            legend_value: false
+        series:
+          - entity: sensor.mj6_fc99_temperature
+            yaxis_id: temps
+            type: line
+            name: Greenhouse Temperature
+            group_by:
+              func: avg
+              duration: 10min
+            color: crimson
+          - entity: sensor.stiebel_eltron_isg_outdoor_temperature
+            yaxis_id: temps
+            type: line
+            name: Outside Temperature
+            group_by:
+              func: avg
+              duration: 10min
+            color: dodgerblue
+          - entity: sensor.mj6_fc99_humidity
+            yaxis_id: humid
+            type: line
+            name: Greenhouse Humidity
+            group_by:
+              func: avg
+              duration: 10min
+            color: lawngreen
+    badges:
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        color: green
+        entity: sensor.mj6_fc99_voltage
+  - title: Soil
+    path: soil
+    icon: ''
+    cards:
+      - type: custom:apexcharts-card
+        config_templates: grey_grid
+        apex_config:
+          chart:
+            height: 400px
+        graph_span: 7d
+        span:
+          end: day
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        yaxis:
+          - id: temps
+            min: -4
+            max: 32
+            decimals: 0
+            apex_config:
+              tickAmount: 9
+          - id: moisture
+            min: 8
+            max: 26
+            apex_config:
+              tickAmount: 9
+            decimals: 0
+            opposite: true
+          - id: conductivity
+            min: 90
+            max: 135
+            apex_config:
+              tickAmount: 9
+            decimals: 0
+            opposite: true
+        all_series_config:
+          stroke_width: 1
+          extend_to: false
+          show:
+            extremas: true
+            legend_value: false
+        series:
+          - entity: sensor.ss_e139_temperature
+            yaxis_id: temps
+            type: line
+            name: Soil Temperature
+            group_by:
+              func: avg
+              duration: 10min
+            color: crimson
+          - entity: sensor.ss_e139_conductivity
+            yaxis_id: conductivity
+            type: line
+            name: Soil conductivity
+            group_by:
+              func: avg
+              duration: 10min
+            color: dodgerblue
+          - entity: sensor.ss_e139_moisture
+            yaxis_id: moisture
+            type: line
+            name: Soil Water V/V
+            group_by:
+              func: avg
+              duration: 10min
+            color: lawngreen
+      - type: custom:apexcharts-card
+        config_templates: grey_grid
+        apex_config:
+          chart:
+            height: 300px
+        graph_span: 1d
+        span:
+          end: hour
+        header:
+          show: false
+          show_states: true
+          colorize_states: true
+        yaxis:
+          - id: temps
+            min: -4
+            max: 32
+            decimals: 0
+            apex_config:
+              tickAmount: 9
+          - id: moisture
+            min: 10
+            max: 19
+            apex_config:
+              tickAmount: 9
+            decimals: 0
+            opposite: true
+          - id: conductivity
+            min: 100
+            max: 118
+            apex_config:
+              tickAmount: 9
+            decimals: 0
+            opposite: true
+        all_series_config:
+          stroke_width: 1
+          extend_to: false
+          show:
+            extremas: true
+            legend_value: false
+        series:
+          - entity: sensor.ss_e139_temperature
+            yaxis_id: temps
+            type: line
+            name: Soil Temperature
+            group_by:
+              func: avg
+              duration: 10min
+            color: crimson
+          - entity: sensor.ss_e139_conductivity
+            yaxis_id: conductivity
+            type: line
+            name: Soil conductivity
+            group_by:
+              func: avg
+              duration: 10min
+            color: dodgerblue
+          - entity: sensor.ss_e139_moisture
+            yaxis_id: moisture
+            type: line
+            name: Soil Water V/V
+            group_by:
+              func: avg
+              duration: 10min
+            color: lawngreen
+    badges:
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        color: green
+        entity: sensor.ss_e139_voltage
+    type: masonry
+

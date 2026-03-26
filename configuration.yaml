@@ -1,0 +1,768 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+#install card-mod as a front end module
+#when update card-mod through HACS need to update extra_module_url    
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# to fix device_class of temperature sensors
+customize: !include customize.yaml
+
+#paths to sensor and template yaml
+sensor: !include_dir_merge_list sensors/
+template: !include_dir_merge_list templates/
+
+
+# utility meters to monitor daily production from each solar array 
+utility_meter:
+  west_array_energy_daily:
+    unique_id: d4710ee7-5b2d-4410-b1b1-f8a946f253e5
+    source: sensor.west_array_total_energy
+    name: West Array Energy Today
+    cycle: daily
+
+  south_array_energy_daily:
+    unique_id: f60b40bc-59ac-4c2d-b952-053d628f8244
+    source: sensor.south_array_total_energy
+    name: South Array Energy Today
+    cycle: daily
+
+  east_array_energy_daily:
+    unique_id: 8f2155de-17e1-46c5-b3bc-fefa50e9a043
+    source: sensor.east_array_total_energy
+    name: East Array Energy Today
+    cycle: daily
+    
+  grid_import_energy_daily:
+    unique_id: 251f60da-adb1-4f2e-a1c5-97001e87153a
+    source: sensor.wilkinsonsolar_site_import
+    name: Grid Import Energy Today
+    cycle: daily
+    
+  grid_export_energy_daily:
+    unique_id: 3966a7d8-08df-4d01-b80f-041628e6a4f1
+    source: sensor.wilkinsonsolar_site_export
+    name: Grid Export Energy Today
+    cycle: daily
+    
+  solar_energy_daily:
+    unique_id: 89f6a379-8386-41bc-943d-74e8622ab453
+    source: sensor.wilkinsonsolar_solar_export
+    name: Solar Energy Today
+    cycle: daily
+    
+  load_import_daily:
+    unique_id: 84e8aa8e-5676-4690-a56a-2d1f0c1024fa
+    source: sensor.wilkinsonsolar_load_import
+    name: Load Import Energy Today
+    cycle: daily
+    
+#rjw add
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+    - 172.30.33.0/24  
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
+#text to speech using google cloud service
+tts:
+  - platform: google_cloud
+    key_file: SERVICE_ACCOUNT.json
+    service_name: google_cloud
+    language: en-GB
+    gender: female
+
+
+
+
+#google assistant config
+google_assistant:
+    project_id: mouchehaha
+    service_account: !include SERVICE_ACCOUNT.json
+    report_state: true
+    expose_by_default: false
+    entity_config:
+        input_boolean.newswitch:
+            name: Dummy switch
+        sensor.atc_23b4_temperature:
+            name: Ensuite temperature
+            room: Main bedroom
+        sensor.atc_04d6_temperature:
+            name: Julia's bedroom temperature
+            room: Julia's bedroom
+        sensor.atc_34ae_temperature:
+            name: Music room temperature
+            room: Music room
+        sensor.stiebel_eltron_isg_actual_room_temperature_hk_1:
+            name: Hall temperature
+            room: Hallway
+        sensor.lounge_temperature:
+            name: Lounge temperature
+            room: Lounge
+        sensor.diy_sensor_4b62_temperature:
+            room: Office
+            name: Office temperature      
+        sensor.atc_632b_temperature:
+            name: Bathroom temperature
+            room: Family bathroom
+        sensor.atc_e6fc_temperature:
+            name: Ensuite bathroom temperature
+            room: Ensuite bathroom
+        sensor.atc_6a43_temperature:
+            name: Kitchen temperature
+            room: Kitchen
+        sensor.atc_23b4_humidity:
+            name: Ensuite humidity
+            room: Main bedroom
+        sensor.atc_04d6_humidity:
+            name: Julia's bedroom humidity
+            room: Julia's bedroom
+        sensor.atc_34ae_humidity:
+            name: Music room humidity
+            room: Music room
+        sensor.stiebel_eltron_isg_actual_room_humidity_hk_1:
+            name: Hall humidity
+            room: Hallway
+        sensor.lounge_humidity:
+            name: Lounge humidity
+            room: Lounge
+        sensor.atc_632b_humidity:
+            name: Bathroom humidity
+            room: Family bathroom
+        sensor.atc_e6fc_humidity:
+            name: Ensuite bathroom humidity
+            room: Ensuite bathroom
+        sensor.atc_6a43_humidity:
+            name: Kitchen humidity
+            room: Kitchen            
+        scene.solar_boost_off:
+            name: Solar boost off
+            room: Plant room
+        scene.solar_boost_on:
+            name: Solar boost on
+            room: Plant room
+        climate.comfort_temperature:
+            name: Comfort temperature
+            room: Hallway
+        input_select.energy_source:
+            name: Select energy source
+            room: Porch
+        script.google_assistant_read_power_flow:
+            name: Read power flow        
+        script.google_assistant_read_energy_stats:
+            name: Read energy stats
+        script.google_assistant_read_seven_day_stats:
+            name: Read seven day stats                
+        script.google_assistant_read_heat_pump_stats:
+            name: Read heat pump stats         
+        script.google_assistant_read_one_day_temp_stats:
+            name: Read one day temp stats
+        script.google_assistant_read_temperature_stats:
+            name: Read temperature stats
+        script.google_assistant_read_one_day_humidity_stats:
+            name: Read one day humidity stats
+        script.google_assistant_read_humidity_stats:
+            name: Read humidity stats            
+        
+            
+# input select for Google Home. Not used
+input_select:
+  energy_source:
+    name: Energy Source
+    options:
+      - 'Battery power'
+      - 'Solar power'
+      - 'Grid power'
+      - 'Load power'
+    initial: 'Load power'
+    icon: mdi:lightning-bolt         
+             
+             
+
+# automation config
+automation test:
+  - alias: "test_conditional_trigger"
+    id: "automation_0"
+    triggers:
+      - trigger: state
+        entity_id: sensor.wilkinsonsolar_load_power
+    condition:
+      - condition: template
+        value_template: >
+          {{ states.input_boolean.newswitch.state=='on' }}
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            input_boolean.mytoggle: "on"
+
+automation boost on:
+  - alias: "sg_dummy_trigger_on"    
+    id: "automation_1"
+    triggers:
+      - trigger: state
+        entity_id: sensor.diff_site_export
+    conditions:
+      - and:
+        - condition: template
+          value_template: >
+            {{ states.input_boolean.sg_run_today.state=='off' }}
+        - condition: template
+          value_template: >
+            {{ (states.sensor.wilkinsonsolar_charge.state | int(0)) > 80 }}
+        - condition: template
+          value_template: >
+            {{ (states.sensor.diff_site_export.state | float(2)) > 1.0 }} 
+        - condition: numeric_state
+          entity_id: sun.sun
+          attribute: elevation
+          above: 5    
+    variables:
+      notification_action: notify.mobile_app_sm_a505fn
+    actions:
+# set to SG ready mode 3 solar boost input 1 on input 2 off
+      - action: scene.apply
+        data:
+          entities:
+            switch.stiebel_eltron_isg_sg_ready_input_1: "on"
+      - action: scene.apply
+        data:
+          entities:
+            switch.stiebel_eltron_isg_sg_ready_input_2: "off"
+# activate SG ready function and send message            
+      - action: scene.apply
+        data:
+          entities:
+            input_boolean.sg_dummy_switch: "on"
+      - action: "{{ notification_action }}"
+        data:
+          message: "SG ready activated" 
+# set flag to show SG ready has been activated once today
+      - action: scene.apply
+        data:
+          entities:
+            input_boolean.sg_run_today: "on"
+
+automation boost off:
+  - alias: "sg_dummy_trigger_off"    
+    id: "automation_2"
+    triggers:
+      - trigger: time_pattern
+        # Match on interval
+        minutes: "/5"
+    conditions:
+      - and:
+        - condition: template
+          value_template: >
+            {{ states.input_boolean.sg_dummy_switch.state=="on" }}
+        - or:
+          - condition: template
+            value_template: >
+              {{ (states.sensor.wilkinsonsolar_charge.state | int(0)) < 50 }}
+          - condition: template
+            value_template: >
+              {{ (states.sensor.diff_site_export.state | float(2)) < 0.2 }} 
+          - condition: numeric_state
+            entity_id: sun.sun
+            attribute: elevation
+            below: 5    
+    variables:
+      notification_action: notify.mobile_app_sm_a505fn
+    actions:
+# set to SG ready mode 3 solar boost input 1 on input 2 off
+      - action: scene.apply
+        data:
+          entities:
+            switch.stiebel_eltron_isg_sg_ready_input_1: "off"
+      - action: scene.apply
+        data:
+          entities:
+            switch.stiebel_eltron_isg_sg_ready_input_2: "off"
+# activate SG ready function and send message            
+      - action: scene.apply
+        data:
+          entities:
+            input_boolean.sg_dummy_switch: "off"
+      - action: "{{ notification_action }}"
+        data:
+          message: "SG ready deactivated"  
+
+# SG boost can be ran once per day 
+# This automation resets the state flag
+automation reset SG run today:
+  - alias: "sg_run_today_off"    
+    id: "automation_3"
+    triggers:
+      - trigger: time
+        at: "02:00:00"
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            input_boolean.sg_run_today: "off"
+            
+automation officeLightOn:
+  - alias: "office_light_on"
+    id: "automation_4"
+    triggers:
+      - trigger: time
+        at: [sensor.random_on_1, sensor.random_on_2, sensor.random_on_3]
+    conditions:
+      - and:
+          # - condition: template
+            # value_template: >
+              # {{ states.device_tracker.sm_a505fn.state!='home' }}
+          - condition: template
+            value_template: >
+              {{ states.input_boolean.awayfromhome.state == 'on' }}                 
+          - or:
+            - condition: sun
+              before: sunrise
+            - condition: sun
+              after: sunset 
+              after_offset: "-00:30:00"                     
+            - condition: template
+              value_template: >
+                {{ states.sensor.wilkinsonsolar_site_power.state | float(0) > -0.1 }}                
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            switch.switch.office_light_main: "on"            
+            
+automation officeLightOff:
+  - alias: "office_light_off"
+    id: "automation_5"
+    triggers:
+      - trigger: time
+        at: [sensor.random_off_1, sensor.random_off_2, sensor.random_off_3]
+    conditions:
+      - and:
+          - condition: template
+            value_template: >
+              {{ states.input_boolean.awayfromhome.state == 'on' }}  
+          - condition: template
+            value_template: >
+              {{ states.switch.office_light_main.state=='on' }}
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            switch.switch.office_light_main: "off" 
+            
+automation loungeLightOn:
+  - alias: "lounge_light_on"
+    id: "automation_6"
+    triggers:
+      - trigger: time
+        at: [sensor.random_on_4, sensor.random_on_5, sensor.random_on_6]
+    conditions:
+      - and:
+          # - condition: template
+            # value_template: >
+              # {{ states.device_tracker.sm_a505fn.state!='home' }}
+          - condition: template
+            value_template: >
+              {{ states.input_boolean.awayfromhome.state == 'on' }}                 
+          - or:
+            - condition: sun
+              before: sunrise
+            - condition: sun
+              after: sunset 
+              after_offset: "-00:30:00"                     
+            - condition: template
+              value_template: >
+                {{ states.sensor.wilkinsonsolar_site_power.state | float(0) > -0.1 }}                              
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            switch.lounge_light_main: "on"            
+            
+automation loungeLightOff:
+  - alias: "lounge_light_off"
+    id: "automation_7"
+    triggers:
+      - trigger: time
+        at: [sensor.random_off_4, sensor.random_off_5, sensor.random_off_6]
+    conditions:
+      - and:
+          - condition: template
+            value_template: >
+              {{ states.input_boolean.awayfromhome.state == 'on' }}          
+          - condition: template
+            value_template: >
+              {{ states.switch.lounge_light_main.state=='on' }}
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            switch.lounge_light_main: "off" 
+ 
+automation mediaPlayerOn:
+  - alias: "moucheOn"
+    id: "automation_8"
+    triggers:
+      - trigger: time
+        at: [sensor.random_on_7, sensor.random_on_8, sensor.random_on_9]
+    conditions:
+      - and:
+          # - condition: template
+            # value_template: >
+              # {{ states.device_tracker.sm_a505fn.state!='home' }}              
+          - condition: template
+            value_template: >
+              {{ states.input_boolean.awayfromhome.state == 'on' }}
+          - condition: template
+            value_template: >
+              {{ states.media_player.mouche.state != 'playing' }}
+    actions:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.mouche
+      data:
+        media_content_id: media-source://radio_browser/98adecf7-2683-4408-9be7-02d3f9098eb8
+        media_content_type: audio/mpeg
+      metadata:
+        title: BBC World Service
+        thumbnail: http://cdn-profiles.tunein.com/s24948/images/logoq.jpg?t=1
+        media_class: music
+        children_media_class: null
+        navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://radio_browser
+          - media_content_type: music
+            media_content_id: media-source://radio_browser/country/GB          
+          
+automation mediaPlayerOff:
+  - alias: "moucheOff"
+    id: "automation_9"
+    triggers:
+      - trigger: time
+        at: [sensor.random_off_7, sensor.random_off_8, sensor.random_off_9]
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            media_player.mouche: "off" 
+
+automation soundDoorBell:
+  - alias: "bingBong"
+    id: "automation_10"
+    trigger:
+      - platform: state
+        entity_id: siren.tapo_hub_7dea_siren
+        to: "on"
+        from: "off"
+    actions:
+      - variables:
+          # Save the original volume level
+          original_volume: "{{ state_attr('media_player.mouche', 'volume_level') | float(0.4) }}"
+      - service: media_player.volume_set
+        data:
+          volume_level: 0.6 # Set your desired temporary volume level (e.g., 60%)
+        target:
+          entity_id: media_player.mouche
+      - service: media_player.play_media
+        data:
+          media_content_id: http://192.168.1.28:8123/local/media/doorbell-2.mp3
+          media_content_type: audio/mpeg 
+        target:
+          entity_id: media_player.mouche        
+      - delay:
+          seconds: 5 # Wait for a short period
+      - service: media_player.volume_set
+        data:
+          # Restore the original volume level using the variable
+          volume_level: "{{ original_volume }}"
+        target:
+          entity_id: media_player.mouche   
+    
+automation doorBellPrivacy:
+  - alias: "privacyOn"
+    id: "automation_11"
+    trigger:
+      - platform: state
+        entity_id: switch.doorbell_privacy
+        from: "on"
+        to: "off"
+    mode: "restart" #if triggered several times reset the delay countdown
+    actions:
+      - delay: 
+          seconds: 133 
+      - service: switch.turn_on
+        entity_id: switch.doorbell_privacy           
+          
+automation porchLightOn:
+  - alias: "porch_light_on"
+    id: "automation_12"
+    triggers:
+      - trigger: sun
+        event: sunset
+        offset: "00:15:00"    
+    conditions:
+      - and:
+          # - condition: template
+            # value_template: >
+              # {{ states.device_tracker.sm_a505fn.state!='home' }}
+          - condition: template
+            value_template: >
+              {{ states.switch.porch_light.state == 'off' }}        
+           
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            switch.porch_light: "on"            
+            
+automation porchLightOff:
+  - alias: "porch_light_off"
+    id: "automation_13"
+    triggers:
+      - trigger: time
+        at: "21:15:00"
+      - trigger: time
+        at: "01:15:00"
+    conditions:
+      - and:
+          - condition: template
+            value_template: >
+              {{ states.switch.porch_light.state == 'on' }}   
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            switch.porch_light: "off" 
+            
+automation changeComfortTemp:
+  - alias: Set Number from Sensor
+    id: "automation_14"
+    trigger:
+      - platform: state
+        entity_id: climate.comfort_temperature
+        attribute: temperature        
+    mode: "restart" #if triggered several times reset the delay countdown
+    actions:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.dummynumber
+        data:
+          value: "{{ (states.climate.comfort_temperature.attributes.temperature) | float(0) }}" # Get the sensor state      
+
+automation all lights off:
+  - alias: "all_lights_off"    
+    id: "automation_15"
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.all_lights_off
+        from: "off"     
+      - trigger: time
+        at: "00:12:34"
+        
+    actions:
+      - action: scene.apply
+        data:
+          entities:
+            switch.porch_light : "off"
+            switch.lounge_light_main : "off"
+            switch.lounge_light_one : "off"
+            switch.lounge_light_two : "off"
+            switch.office_light_main : "off"
+            switch.hall_light_one : "off"
+            switch.hall_light_two : "off"
+            switch.music_room_light_main : "off"
+            switch.music_room_light_one : "off"   
+      - delay: 00:00:02 
+      - action: scene.apply
+        data:
+          entities:
+            input_boolean.all_lights_off: "off"          
+            
+automation trigger alarm:
+  - alias: "trigger_alarm"    
+    id: "automation_16"
+    triggers:    
+      - trigger: state
+        entity_id: binary_sensor.alarmsensor_5d1b24_hall_pir_front_door_contact
+        from: "on"   
+      - trigger: state
+        entity_id: binary_sensor.alarmsensor_5d1b24_kitchen_pir
+        from: "on"           
+      - trigger: state
+        entity_id: binary_sensor.alarmsensor_5d1b24_landing_pir
+        from: "on"     
+      - trigger: state
+        entity_id: binary_sensor.alarmsensor_5d1b24_lounge_pir_contact
+        from: "on"     
+      - trigger: state
+        entity_id: binary_sensor.alarmsensor_5d1b24_music_room_pir
+        from: "on"     
+      - trigger: state
+        entity_id: binary_sensor.alarmsensor_5d1b24_playroom_pir
+        from: "on"    
+      - trigger: state
+        entity_id: binary_sensor.alarmsensor_5d1b24_utility_room_contact
+        from: "on"  
+    conditions:
+      - and:
+        - condition: template
+          value_template: >
+            {{ states.input_boolean.alarm_triggered.state=='off' }}
+        - condition: template
+          value_template: >
+            {{ states.input_boolean.alarm_set.state=='on'  }} 
+    variables:
+      notification_action: notify.mobile_app_sm_a505fn
+    actions:
+      - action: scene.apply
+ # set flag to show alarm has been triggered
+        data:
+          entities:
+            input_boolean.alarm_triggered: "on"
+# send message            
+      - action: "{{ notification_action }}"
+        data:
+          message: "alarm triggered {% if is_state('binary_sensor.alarmsensor_5d1b24_hall_pir_front_door_contact', 'off') %}
+          hall
+          {% elif is_state('binary_sensor.alarmsensor_5d1b24_kitchen_pir', 'off') %}
+          kitchen
+          {% elif is_state('binary_sensor.alarmsensor_5d1b24_landing_pir', 'off') %}
+          landing
+          {% elif is_state('binary_sensor.alarmsensor_5d1b24_lounge_pir_contact', 'off') %}
+          lounge
+          {% elif is_state('binary_sensor.alarmsensor_5d1b24_music_room_pir', 'off') %}
+          music room
+          {% elif is_state('binary_sensor.alarmsensor_5d1b24_playroom_pir', 'off') %}
+          playroom
+          {% elif is_state('binary_sensor.alarmsensor_5d1b24_utility_room_contact', 'off') %}
+          utility room          
+          {% else %}
+          zone not identified
+          {% endif %}" 
+      - delay: 00:00:02 
+      - action: scene.apply
+        data:
+          entities:
+            input_boolean.alarm_set: "off"                  
+
+automation set alarm:
+  - alias: "set_alarm"    
+    id: "automation_17"
+    triggers:    
+      - trigger: state
+        entity_id: input_boolean.alarm_set
+        from: "off"   
+    variables:
+      notification_action: notify.mobile_app_sm_a505fn        
+    actions:
+      - action: scene.apply
+ # set flag to show alarm has been triggered
+        data:
+          entities:
+            input_boolean.alarm_triggered: "off"
+# send message            
+      - action: "{{ notification_action }}"
+        data:
+          message: "alarm set" 
+          
+
+automation alert doorbell battery low:
+  - alias: "doorbell_battery"    
+    id: "automation_18"
+    triggers:    
+      - trigger: time
+        at: 06:00:00
+    conditions:
+      - and:
+        - condition: template
+          value_template: >
+            {{ (states.sensor.doorbell_battery.state | float(100) <20)}}        
+    variables:
+      notification_action: notify.mobile_app_sm_a505fn        
+    actions:
+# send message            
+      - action: "{{ notification_action }}"
+        data:
+          message: "doorbell battery at {{states.sensor.doorbell_battery.state}}%"
+          
+ # https://www.home-assistant.io/integrations/recorder/
+# strategy = store heat pump and solar data, but no data that is available in public domain
+recorder:
+  commit_interval: 20 # buffers the RW to the SD card
+  purge_keep_days: 10
+  include:
+    entities:         # overides glob exclude
+      - sensor.octopus_energy_electricity_19m1039794_1050003203800_export_previous_accumulative_consumption
+      - sensor.octopus_energy_electricity_19m1039794_1050003203800_export_previous_accumulative_cost
+      - sensor.octopus_energy_electricity_19m1039794_1030000402501_previous_accumulative_consumption
+      - sensor.octopus_energy_electricity_19m1039794_1030000402501_previous_accumulative_cost
+      - sensor.net_electricity_cost
+      - sensor.fixedtariffexport
+      - sensor.electricity_maps_co2_intensity
+  exclude:
+    domains:
+      - automation
+      - climate
+      - conversation
+      - media_player
+      - person
+      - sun
+      - todo
+      - tts
+      - weather
+      - zone 
+    entity_globs:             #globs is a key to denote wildcard pattern
+      - sensor.random_*       #random times for lights when away    
+      - sensor.energy_*       #short-term forecast data
+      - sensor.octopus_energy_electricity_19m1039794_1050003203800_*  #information on tariffs
+      - sensor.electricity_maps*                                      #grid co2 intensity and share fossil fuel
+      - sensor.sm_a505fn_*                                            #phone battery
+      - sensor.tapo_hub_7dea_*
+#      - sensor.alarm_*  #stats on the alarm sensors
+      - sensor.*_year_ago  #sql queries on old values 
+      - sensor.*year  #old data for year totals
+      - sensor.stat_* #sql stats on the temperature sensors
+      - sensor.dashboard_* #control update period for dashboard components
+    entities:
+      - sensor.stiebel_eltron_isg_actual_temperature_hk_1 #same data as buffer
+      - sensor.stiebel_eltron_isg_target_temperature_hk_1
+      - sensor.stiebel_eltron_isg_consumed_heating        #provides update of total through the day. Total updates 1x per day
+      - sensor.stiebel_eltron_isg_consumed_water_heating
+      - sensor.stiebel_eltron_isg_produced_heating        #provides update of total through the day. Total updates 1x per day
+      - sensor.stiebel_eltron_isg_produced_water_heating
+      - sensor.fibergateway_gr241ag_download_speed
+      - sensor.fibergateway_gr241ag_upload_speed 
+      - sensor.doorbell_recordings_synchronization
+      - sensor.batteryimport24
+      - sensor.batteryexport24
+      - sensor.gridimport24
+      - sensor.gridexport24
+      - sensor.solarproduction24
+      - sensor.loadimport24	  
+      - sensor.gridpower
+      - sensor.national_grid_dfs_requirements
+      - sensor.national_grid_grid_generation      
+      - sensor.national_grid_embedded_solar_forecast_fourteen_day
+      - sensor.national_grid_embedded_solar_forecast_three_day
+      - sensor.national_grid_embedded_wind_forecast_fourteen_day
+      - sensor.national_grid_embedded_wind_forecast_three_day  
+      - sensor.national_grid_grid_demand_day_ahead_forecast
+      - sensor.national_grid_grid_demand_fourteen_day_forecast
+      - sensor.national_grid_grid_demand_three_day_forecast
+      - sensor.national_grid_solar_forecast
+      - sensor.national_grid_wind_forecast
+      - sensor.national_grid_wind_forecast_earliest
+      - sensor.national_grid_wind_forecast_fourteen_day
+      - sensor.national_grid_wind_forecast_now_to_three_day
+      - sensor.national_grid_today_wind_peak_time
+      - sensor.national_grid_tomorrow_wind_peak_time

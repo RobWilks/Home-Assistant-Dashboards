@@ -1,0 +1,101 @@
+apexcharts_card_templates:
+  default:
+    color_list:
+      - '#2E93fA'
+      - '#66DA26'
+      - plum
+      - '#E91E63'
+      - '#FF9800'
+  grey_grid:
+    config_templates: default
+    header:
+      show: true
+    apex_config:
+      grid:
+        position: back
+        xaxis:
+          lines:
+            show: true
+        yaxis:
+          lines:
+            show: true
+        strokeDashArray: 0
+        borderColor: '#404040'
+      xaxis:
+        axisBorder:
+          show: true
+          color: '#404040'
+views:
+  - title: Home
+    sections:
+      - type: grid
+        cards:
+          - type: custom:config-template-card
+            entities:
+              - sensor.total_solar_forecast_tomorrow
+              - sensor.envoy_482333049062_energy_production_today
+              - sensor.solarpvtoday7dmax
+            variables:
+              SOLAR_MAX: |
+                states['sensor.solarpvtoday7dmax'].state === 'unavailable' || 
+                states['sensor.solarpvtoday7dmax'].state === 'unknown' 
+                ? '50.0' : states['sensor.solarpvtoday7dmax'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 300px
+                yaxis:
+                  max: ${Math.ceil(parseFloat(SOLAR_MAX) / 5) * 5}
+                  decimalsInFloat: 0
+                  forceNiceScale: true
+                  min: 0
+                legend:
+                  show: false
+                marker:
+                  strokeWidth: 0
+              graph_span: 14d
+              span:
+                end: day
+                offset: +1day
+              stacked: true
+              header:
+                show_states: true
+                title: Solar production and Max/Min PV forecast
+                colorize_states: false
+              all_series_config:
+                stroke_width: 0
+                show:
+                  offset_in_name: false
+              series:
+                - entity: sensor.envoy_482333049062_energy_production_today
+                  type: column
+                  name: Solar production
+                  group_by:
+                    func: max
+                    duration: 1day
+                  show:
+                    in_header: true
+                  color: goldenrod
+                - entity: sensor.total_solar_forecast_tomorrow
+                  type: column
+                  name: PV forecast min
+                  offset: '-1day'
+                  group_by:
+                    func: min
+                    duration: 1day
+                  opacity: 0
+                  stack_group: forecast
+                  show:
+                    in_header: true
+                - entity: sensor.total_solar_forecast_tomorrow
+                  type: column
+                  name: PV forecast delta
+                  offset: '-1day'
+                  group_by:
+                    func: delta
+                    duration: 1day
+                  stack_group: forecast
+                  show:
+                    in_header: false

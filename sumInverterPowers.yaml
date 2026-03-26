@@ -1,0 +1,73 @@
+  
+  
+# sum inverter power for each array
+# individual inverters are grouped by array location and report value in W
+# we want total power per array in kW
+
+# east array
+  - trigger: 
+      trigger: state
+      entity_id: 
+        - sensor.inverter_512321029114
+        - sensor.inverter_512321029062
+        - sensor.inverter_512321028846
+        - sensor.inverter_512321028554
+        - sensor.inverter_512321028469
+        - sensor.inverter_512321028344
+        - sensor.inverter_512321028251
+        - sensor.inverter_512321027856
+        - sensor.inverter_512321027854
+        - sensor.inverter_512321027555
+        - sensor.inverter_512321027378
+        - sensor.inverter_512321027233
+        - sensor.inverter_512321026830
+        - sensor.inverter_512321026009  
+    sensor:
+    - name: sumEastArray
+      unique_id: a8044677-af37-47ad-a6e7-a845f31d27ad
+      unit_of_measurement: "kW"
+      device_class: power
+      state: >
+        {% set res =  expand('sensor.east_array') | map(attribute='state') | map('float',default=0) | sum %}
+        {{ res / 1000 }}
+
+# south array
+  - trigger: 
+      trigger: state
+      entity_id: 
+      - sensor.inverter_512321028869
+      - sensor.inverter_512321028588
+      - sensor.inverter_512321028525
+      - sensor.inverter_512318013423 
+    sensor:
+    - name: sumSouthArray
+      unique_id: 69ca4657-4d78-4f40-8d8d-f88824a0053b
+      unit_of_measurement: "kW"
+      device_class: power
+      state: >
+        {% set res =  expand('sensor.south_array') | map(attribute='state') | map('float',default=0) | sum %}
+        {{ res / 1000 }} 
+
+# west array
+  - trigger: 
+      trigger: state
+      entity_id: 
+      - sensor.inverter_512321002254
+      - sensor.inverter_512321028839
+      - sensor.inverter_512321028614
+      - sensor.inverter_512321028526
+      - sensor.inverter_512321027233
+      - sensor.inverter_512321009257
+      - sensor.inverter_512321002034
+      - sensor.inverter_512321001784
+      - sensor.inverter_512320010337
+      - sensor.inverter_512320009646
+      - sensor.inverter_512318009076
+    sensor:
+    - name: sumWestArray
+      unique_id: 2c9e7ca8-59bb-428c-ac3c-a207d9e8da6b
+      unit_of_measurement: "kW"
+      device_class: power
+      state: >
+        {% set res =  expand('sensor.west_array') | map(attribute='state') | map('float',default=0) | sum %}
+        {{ res / 1000 }}              

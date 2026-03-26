@@ -1,0 +1,834 @@
+apexcharts_card_templates:
+  default:
+    color_list:
+      - dodgerblue
+      - lawngreen
+      - plum
+      - crimson
+      - goldenrod
+  grey_grid:
+    config_templates: default
+    header:
+      show: true
+    apex_config:
+      grid:
+        position: back
+        xaxis:
+          lines:
+            show: true
+        yaxis:
+          lines:
+            show: true
+        strokeDashArray: 0
+        borderColor: '#404040'
+      xaxis:
+        axisBorder:
+          show: true
+          color: '#404040'
+  heat_stat:
+    config_templates: grey_grid
+    all_series_config:
+      stroke_width: 1
+      extend_to: false
+      show:
+        extremas: true
+        in_header: false
+        legend_value: false
+views:
+  - type: sections
+    header:
+      layout: responsive
+      badges_position: top
+      badges_wrap: wrap
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.stiebel_eltron_isg_actual_room_temperature_hk_1
+        name: Room Temp
+        color: crimson
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: number.stiebel_eltron_isg_comfort_temperature_target_hk1
+        name: Target room temp
+        color: goldenrod
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.stiebel_eltron_isg_actual_temperature_water
+        name: DHW temp
+        color: magenta
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: number.stiebel_eltron_isg_comfort_water_temperature_target
+        name: Target DHW temp
+        color: goldenrod
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.stiebel_eltron_isg_actual_temperature_buffer
+        name: buffer temp
+        color: plum
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        color: turquoise
+        entity: sensor.heating_cop_day
+        icon: mdi:heat-pump
+        name: Heating CoP day
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        name: DHW CoP day
+        color: dodgerblue
+        entity: sensor.dhw_cop_day
+    max_columns: 4
+    title: Heat pump stats
+    path: heat-pump-stats
+    icon: mdi:heat-pump
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Temperatures and Pump Operation
+            heading_style: title
+            icon: mdi:thermometer
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            apex_config:
+              chart:
+                height: 600px
+              legend:
+                show: true
+                position: top
+            graph_span: 1d
+            yaxis:
+              - id: temps
+                min: 0
+                max: 60
+                decimals: 0
+                apex_config:
+                  tickAmount: 6
+            all_series_config:
+              stroke_width: 1
+              extend_to: false
+              show:
+                extremas: true
+            series:
+              - entity: sensor.stiebel_eltron_isg_actual_room_temperature_hk_1
+                name: room temp
+                color: crimson
+                type: line
+                group_by:
+                  func: avg
+                  duration: 5min
+              - entity: sensor.stiebel_eltron_isg_actual_temperature_water
+                name: hot water temp
+                color: magenta
+                group_by:
+                  func: avg
+                  duration: 5min
+              - entity: sensor.stiebel_eltron_isg_outdoor_temperature
+                name: outdoor temp
+                color: lawngreen
+                type: line
+                group_by:
+                  func: avg
+                  duration: 5min
+              - entity: sensor.stiebel_eltron_isg_flow_temperature_wp1
+                name: flow temp
+                color: darkviolet
+                type: line
+                group_by:
+                  func: avg
+                  duration: 5min
+              - entity: sensor.stiebel_eltron_isg_actual_temperature_buffer
+                name: buffer temp
+                color: plum
+                type: line
+                group_by:
+                  func: avg
+                  duration: 5min
+              - entity: sensor.stiebel_eltron_isg_return_temperature_wp1
+                name: return temp
+                color: dodgerblue
+                type: line
+                group_by:
+                  func: avg
+                  duration: 5min
+            grid_options:
+              columns: 18
+              rows: 10
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            apex_config:
+              legend:
+                show: true
+              chart:
+                height: 240px
+              grid:
+                padding:
+                  left: 50
+            graph_span: 1day
+            all_series_config:
+              type: area
+              stroke_width: 0
+              opacity: 0.7
+              curve: stepline
+              show:
+                legend_value: false
+            yaxis:
+              - id: y_axis1
+                min: 0
+                max: 6
+                show: false
+                decimals: 0
+              - id: y_axis2
+                min: -2
+                max: 4
+                show: false
+              - id: y_axis3
+                min: -3
+                max: 3
+                show: false
+              - id: y_axis4
+                min: -4
+                max: 2
+                show: false
+              - id: y_axis5
+                min: -5
+                max: 1
+                show: false
+            series:
+              - entity: sensor.stiebel_eltron_isg_volume_stream_wp1
+                name: flow rate primary
+                yaxis_id: y_axis1
+                color: dodgerblue
+                transform: return x * 0.032;
+              - entity: binary_sensor.stiebel_eltron_isg_buffer_1_charging_pump
+                name: buffer charging pump
+                yaxis_id: y_axis2
+                color: plum
+                transform: 'return x === ''on'' ? 0.8 : 0;'
+              - entity: binary_sensor.stiebel_eltron_isg_heating_circuit_1_pump
+                name: radiator circulation pump
+                yaxis_id: y_axis3
+                color: crimson
+                transform: 'return x === ''on'' ? 0.8 : 0;'
+              - entity: binary_sensor.stiebel_eltron_isg_dhw_charging_pump
+                name: hot water pump
+                yaxis_id: y_axis4
+                color: magenta
+                transform: 'return x === ''on'' ? 0.8 : 0;'
+              - entity: binary_sensor.stiebel_eltron_isg_compressor
+                name: compressor
+                yaxis_id: y_axis5
+                color: darkviolet
+                transform: 'return x === ''on'' ? 0.8 : 0;'
+      - type: grid
+        cards:
+          - type: heading
+            heading: Energy
+            heading_style: title
+            icon: mdi:lightning-bolt
+          - type: custom:mushroom-template-card
+            entity: sensor.diff_produced_heating
+            name: ''
+            grid_options:
+              columns: 12
+              rows: 2
+            primary: >
+              {% set val2 = states('sensor.diff_consumed_heating') | float(none)
+              %} 
+                Electrical Power Now: {{val2}} kW
+            secondary: >
+              {% set val = states('sensor.diff_produced_heating') | float(none)
+              %} 
+                > Heating Power Now: {{val}} kW
+            icon: mdi:heat-pump
+            card_mod:
+              style: |
+                ha-tile-icon {
+                  --mdc-icon-size: 48px;
+                  --tile-icon-size: 60px;
+
+                  {% set val = states('sensor.diff_consumed_heating') | float(0) %} 
+                  {% if val < 0.4 %}
+                  --tile-color: rgba(0, 191, 255, 0.6) !important;
+                  {% elif val < 0.8 %}
+                  --tile-color: rgba(64, 224, 208, 0.6) !important;
+                  {% elif val < 1.2 %}
+                  --tile-color: rgba(173, 255, 47, 0.6) !important;
+                  {% elif val < 1.6 %}
+                  --tile-color: rgba(255, 255, 0, 0.6) !important;
+                  {% elif val < 2.0 %}
+                  --tile-color: rgba(255, 215, 0, 0.6) !important;
+                  {% elif val < 2.4 %}
+                  --tile-color: rgba(255, 140, 0, 0.6) !important;
+                  {% else %}
+                  --tile-color: rgba(255, 0, 0, 0.6) !important;
+                  {% endif %} 
+
+
+
+                }
+                ha-tile-info { 
+                --tile-info-primary-font-size: 16px;
+                --tile-info-secondary-font-size: 16px;
+                }
+
+                ha-card {
+                  align-items: left;
+                }
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            header:
+              show: true
+              title: Heating and Hot Water (kWh)
+            apex_config:
+              legend:
+                show: true
+                position: top
+                horizontalAlign: left
+              chart:
+                height: 400px
+            graph_span: 24h
+            all_series_config:
+              type: area
+              stroke_width: 2
+              opacity: 0.3
+              curve: stepline
+              show:
+                legend_value: false
+            series:
+              - entity: sensor.stiebel_eltron_isg_produced_heating_today
+                name: Heating thermal E
+                color: crimson
+              - entity: sensor.stiebel_eltron_isg_consumed_heating_today
+                name: Heating electrical E
+                color: plum
+              - entity: sensor.stiebel_eltron_isg_produced_water_heating_today
+                name: DHW thermal E x 10
+                color: lawngreen
+                transform: return x * 10;
+              - entity: sensor.stiebel_eltron_isg_consumed_water_heating_today
+                name: DHW electrical E x 10
+                color: dodgerblue
+                transform: return x * 10;
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            apex_config:
+              legend:
+                show: true
+              chart:
+                height: 240px
+              grid:
+                padding:
+                  left: 40
+            graph_span: 1day
+            all_series_config:
+              type: area
+              stroke_width: 0
+              opacity: 0.7
+              curve: stepline
+              show:
+                legend_value: false
+            yaxis:
+              - id: y_axis1
+                min: 0
+                max: 6
+                show: false
+                decimals: 0
+              - id: y_axis2
+                min: -2
+                max: 4
+                show: false
+              - id: y_axis3
+                min: -3
+                max: 3
+                show: false
+              - id: y_axis4
+                min: -4
+                max: 2
+                show: false
+              - id: y_axis5
+                min: -5
+                max: 1
+                show: false
+            series:
+              - entity: sensor.stiebel_eltron_isg_volume_stream_wp1
+                name: flow rate primary
+                yaxis_id: y_axis1
+                color: dodgerblue
+                transform: return x * 0.032;
+              - entity: binary_sensor.stiebel_eltron_isg_buffer_1_charging_pump
+                name: buffer charging pump
+                yaxis_id: y_axis2
+                color: plum
+                transform: 'return x === ''on'' ? 0.8 : 0;'
+              - entity: binary_sensor.stiebel_eltron_isg_heating_circuit_1_pump
+                name: radiator circulation pump
+                yaxis_id: y_axis3
+                color: crimson
+                transform: 'return x === ''on'' ? 0.8 : 0;'
+              - entity: binary_sensor.stiebel_eltron_isg_dhw_charging_pump
+                name: hot water pump
+                yaxis_id: y_axis4
+                color: magenta
+                transform: 'return x === ''on'' ? 0.8 : 0;'
+              - entity: binary_sensor.stiebel_eltron_isg_compressor
+                name: compressor
+                yaxis_id: y_axis5
+                color: darkviolet
+                transform: 'return x === ''on'' ? 0.8 : 0;'
+      - type: grid
+        cards:
+          - type: heading
+            heading: Controls
+            heading_style: title
+            icon: mdi:controller
+            badges: []
+          - type: custom:numberbox-card
+            border: true
+            entity: number.stiebel_eltron_isg_comfort_temperature_target_hk1
+            name: Heating Comfort Temp Target
+            min: 18
+            max: 22
+            step: 0.1
+            icon: mdi:thermometer
+          - type: custom:numberbox-card
+            border: true
+            entity: number.stiebel_eltron_isg_eco_temperature_target_hk1
+            name: Heating Eco Temp Target
+            min: 15
+            max: 20
+            step: 0.1
+            icon: mdi:thermometer
+          - type: custom:numberbox-card
+            border: true
+            entity: number.stiebel_eltron_isg_comfort_water_temperature_target
+            name: DHW Comfort Temp Target
+            min: 45
+            max: 60
+            step: 0.1
+            icon: mdi:thermometer
+          - type: custom:numberbox-card
+            border: true
+            entity: number.stiebel_eltron_isg_eco_water_temperature_target
+            name: DHW Eco Temp Target
+            min: 45
+            max: 50
+            step: 0.1
+            icon: mdi:thermometer
+          - type: tile
+            entity: number.stiebel_eltron_isg_heating_curve_rise_hk1
+            features_position: bottom
+            vertical: false
+            name: Heating Curve Rise
+            color: cyan
+          - type: heading
+            heading: Energy Management
+            heading_style: title
+            icon: mdi:home-edit-outline
+          - type: tile
+            entity: switch.stiebel_eltron_isg_sg_ready_input_1
+            features_position: bottom
+            vertical: false
+            name: Input 1
+            color: pink
+          - type: tile
+            entity: switch.stiebel_eltron_isg_sg_ready_input_2
+            features_position: bottom
+            vertical: false
+            name: Input 2
+            color: deep-orange
+          - type: tile
+            entity: switch.stiebel_eltron_isg_sg_ready_active
+            features_position: bottom
+            vertical: false
+            name: Active
+            color: green
+          - type: tile
+            entity: sensor.stiebel_eltron_isg_sg_ready_state
+            features_position: bottom
+            vertical: false
+            name: SG Ready State
+            color: green
+          - type: markdown
+            content: |-
+              - X 1.13 1-2: SG Ready input 1
+              - X 1.13 2-3: SG Ready input 2
+              ---
+              **Mode Signal Function**
+              1. Input 2 jumpered Heat pump is off (frost protection)
+              2. Input 1+2 open Standard operation in selected operating
+              mode
+              3. Input 1 jumpered Start with increased values (photovoltaic
+              surplus)
+              4. Input 1+2 jumpered Immediate start with maximum values
+            title: SG Ready Modes
+      - type: grid
+        cards:
+          - type: heading
+            heading: CoP | Heating Day | DHW Day
+            heading_style: title
+            badges:
+              - type: entity
+                show_state: true
+                show_icon: true
+                entity: sensor.heating_cop_day
+              - type: entity
+                show_state: true
+                show_icon: true
+                entity: sensor.dhw_cop_day
+            icon: mdi:heat-wave
+          - type: custom:mushroom-template-card
+            entity: number.heatingcoponeyear
+            primary: Heating cop one year
+            secondary: |
+              {% set val = states(entity) | float(0) | round(2) %} {{ val }}
+            icon: mdi:heat-pump
+            grid_options:
+              columns: 6
+              rows: 1
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-tile-icon {
+                  --mdc-icon-size: 28px;
+                  --tile-icon-size: 32px;
+                  --tile-color: turquoise !important;
+                 }
+                ha-tile-info { 
+                 --tile-info-primary-font-size: 12px;
+                 --tile-info-secondary-font-size: 16px;
+                 }
+                ha-card {
+                  align-items: left;
+                }
+          - type: custom:mushroom-template-card
+            entity: number.dhwcoponeyear
+            primary: DHW cop one year
+            secondary: |
+              {% set val = states(entity) | float(0) | round(2) %} {{ val }}
+            icon: mdi:heat-pump
+            grid_options:
+              columns: 6
+              rows: 1
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-tile-icon {
+                  --mdc-icon-size: 28px;
+                  --tile-icon-size: 32px;
+                  --tile-color: dodgerblue !important;
+                 }
+                ha-tile-info { 
+                 --tile-info-primary-font-size: 12px;
+                 --tile-info-secondary-font-size: 16px;
+                 }
+                ha-card {
+                  align-items: left;
+                }
+          - type: custom:mushroom-template-card
+            entity: number.heatingcoptotal
+            primary: Heating cop total
+            secondary: |
+              {% set val = states(entity) | float(0) | round(2) %} {{ val }}
+            icon: mdi:heat-pump
+            grid_options:
+              columns: 6
+              rows: 1
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-tile-icon {
+                  --mdc-icon-size: 28px;
+                  --tile-icon-size: 32px;
+                  --tile-color: turquoise !important;
+                 }
+                ha-tile-info { 
+                 --tile-info-primary-font-size: 12px;
+                 --tile-info-secondary-font-size: 16px;
+                 }
+                ha-card {
+                  align-items: left;
+                }
+          - type: custom:mushroom-template-card
+            entity: number.dhwcoptotal
+            primary: DHW cop total
+            secondary: |
+              {% set val = states(entity) | float(0) | round(2) %} {{ val }}
+            icon: mdi:heat-pump
+            grid_options:
+              columns: 6
+              rows: 1
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-tile-icon {
+                  --mdc-icon-size: 28px;
+                  --tile-icon-size: 32px;
+                  --tile-color: dodgerblue !important;
+                 }
+                ha-tile-info { 
+                 --tile-info-primary-font-size: 12px;
+                 --tile-info-secondary-font-size: 16px;
+                 }
+                ha-card {
+                  align-items: left;
+                }
+          - type: custom:mushroom-template-card
+            entity: sensor.stiebel_eltron_isg_produced_heating_total
+            primary: Total space heating
+            secondary: |
+              {% set val = states(entity) | float(0) | round(0) %} {{ val }} kWh
+            icon: mdi:heat-pump
+            grid_options:
+              columns: 6
+              rows: 1
+            card_mod:
+              style: |
+                ha-tile-icon {
+                  --mdc-icon-size: 28px;
+                  --tile-icon-size: 32px;
+                  --tile-color: crimson !important;
+                 }
+                ha-tile-info { 
+                 --tile-info-primary-font-size: 12px;
+                 --tile-info-secondary-font-size: 16px;
+                 }
+                ha-card {
+                  align-items: left;
+                }
+          - type: custom:mushroom-template-card
+            entity: sensor.stiebel_eltron_isg_produced_water_heating_total
+            primary: Total DHW heating
+            secondary: |
+              {% set val = states(entity) | float(0) | round(0) %} {{ val }} kWh
+            icon: mdi:heat-pump
+            grid_options:
+              columns: 6
+              rows: 1
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-tile-icon {
+                  --mdc-icon-size: 28px;
+                  --tile-icon-size: 32px;
+                  --tile-color: crimson !important;
+                 }
+                ha-tile-info { 
+                 --tile-info-primary-font-size: 12px;
+                 --tile-info-secondary-font-size: 16px;
+                 }
+                ha-card {
+                  align-items: left;
+                }
+          - type: custom:mushroom-template-card
+            entity: sensor.stiebel_eltron_isg_consumed_heating_total
+            primary: Total electricity for heating
+            secondary: |
+              {% set val = states(entity) | float(0) | round(0) %} {{ val }} kWh
+            icon: mdi:heat-pump
+            grid_options:
+              columns: 6
+              rows: 1
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-tile-icon {
+                  --mdc-icon-size: 28px;
+                  --tile-icon-size: 32px;
+                  --tile-color: plum !important;
+                 }
+                ha-tile-info { 
+                 --tile-info-primary-font-size: 12px;
+                 --tile-info-secondary-font-size: 16px;
+                 }
+                ha-card {
+                  align-items: left;
+                }
+          - type: custom:mushroom-template-card
+            entity: sensor.stiebel_eltron_isg_consumed_water_heating_total
+            primary: Total electricity for hot water
+            secondary: |
+              {% set val = states(entity) | float(0) | round(0) %} {{ val }} kWh
+            icon: mdi:heat-pump
+            grid_options:
+              columns: 6
+              rows: 1
+            features_position: bottom
+            card_mod:
+              style: |
+                ha-tile-icon {
+                  --mdc-icon-size: 28px;
+                  --tile-icon-size: 32px;
+                  --tile-color: plum !important;
+                 }
+                ha-tile-info { 
+                 --tile-info-primary-font-size: 12px;
+                 --tile-info-secondary-font-size: 16px;
+                 }
+                ha-card {
+                  align-items: left;
+                }
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            graph_span: 24h
+            header:
+              show: true
+              title: CoP Today
+              show_states: false
+            apex_config:
+              legend:
+                show: true
+              yaxis:
+                min: 0
+                max: 9
+                decimalsInFloat: 0
+            all_series_config:
+              type: line
+              stroke_width: 1
+              extend_to: false
+              show:
+                legend_value: false
+            series:
+              - entity: number.heatingcop
+                name: Heating
+                color: turquoise
+                group_by:
+                  func: avg
+                  duration: 5m
+              - entity: number.dhwcop
+                name: DHW
+                color: dodgerblue
+                group_by:
+                  func: avg
+                  duration: 5m
+          - type: heading
+            heading: One Year Heat Produced and Electricity Consumed
+          - type: custom:config-template-card
+            entities:
+              - sensor.stat_mean_heating_cop_month
+            variables:
+              COP_DATA: states['sensor.stat_mean_heating_cop_month'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 250px
+                yaxis:
+                  max: 10
+                  min: 0
+                  decimalsInFloat: 0
+                  forceNiceScale: true
+              graph_span: 12month
+              span:
+                start: month
+                offset: '-12month'
+              header:
+                show: true
+                title: Monthly COP
+              series:
+                - entity: sensor.stat_mean_heating_cop_month
+                  name: COP
+                  type: column
+                  color: crimson
+                  data_generator: >
+                    return entity.attributes.monthly_history.split(',').map(item
+                    => {
+                      var parts = item.split(':');
+                      var d = parts[0].split('-');
+                      return [new Date(d[0], d[1] - 1, 1).getTime(), parseFloat(parts[1])];
+                    }).sort((a, b) => a[0] - b[0]);
+                  show:
+                    datalabels: true
+          - type: custom:apexcharts-card
+            config_templates: heat_stat
+            apex_config:
+              chart:
+                height: 300px
+            graph_span: 12month
+            span:
+              start: month
+              offset: '-12month'
+            header:
+              show: true
+              title: Water Heating (kWh)
+            yaxis:
+              - id: heating
+                min: 0
+                max: 320
+                decimals: 0
+                apex_config:
+                  axisBorder:
+                    show: true
+                    color: '#404040'
+                  tickAmount: 8
+            series:
+              - entity: sensor.stiebel_eltron_isg_produced_water_heating_total
+                yaxis_id: heating
+                type: column
+                name: Produced water heating
+                color: crimson
+                statistics:
+                  type: change
+                  period: month
+              - entity: sensor.stiebel_eltron_isg_consumed_water_heating_total
+                yaxis_id: heating
+                type: column
+                name: Consumed water heating
+                color: plum
+                statistics:
+                  type: change
+                  period: month
+          - type: custom:apexcharts-card
+            config_templates: heat_stat
+            apex_config:
+              chart:
+                height: 300px
+            graph_span: 12month
+            span:
+              start: month
+              offset: '-12month'
+            header:
+              show: true
+              title: Space Heating (kWh)
+            yaxis:
+              - id: heating
+                min: 0
+                max: 3000
+                decimals: 0
+                apex_config:
+                  axisBorder:
+                    show: true
+                    color: '#404040'
+                  tickAmount: 6
+            series:
+              - entity: sensor.stiebel_eltron_isg_produced_heating_total
+                yaxis_id: heating
+                type: column
+                name: Produced heating
+                color: crimson
+                statistics:
+                  type: change
+                  period: month
+              - entity: sensor.stiebel_eltron_isg_consumed_heating_total
+                yaxis_id: heating
+                type: column
+                name: Consumed heating
+                color: plum
+                statistics:
+                  type: change
+                  period: month

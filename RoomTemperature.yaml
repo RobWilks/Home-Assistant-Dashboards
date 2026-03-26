@@ -1,0 +1,2945 @@
+apexcharts_card_templates:
+  grey_grid:
+    header:
+      show: true
+    apex_config:
+      grid:
+        position: back
+        xaxis:
+          lines:
+            show: true
+        yaxis:
+          lines:
+            show: true
+        strokeDashArray: 0
+        borderColor: '#404040'
+      xaxis:
+        axisBorder:
+          show: true
+          color: '#404040'
+views:
+  - title: Room Temperature
+    icon: mdi:home
+    path: home
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - show_name: true
+                    show_icon: false
+                    type: button
+                    name: "\_\_\_\_<18"
+                    card_mod:
+                      style: |
+                        ha-card { 
+                          background: rgba(0, 204, 255, 0.6) !important; 
+                          height: 30px !important; 
+                          font-size: 10px;
+                          border-radius: 0px;
+                          border: none;
+                          margin: 0 !important;
+                        }
+                  - type: button
+                    name: "18.0\_\_\_\_\_\_"
+                    show_icon: false
+                    card_mod:
+                      style: |
+                        ha-card { 
+                          background: rgba(0, 255, 204, 0.6) !important; 
+                          height: 30px !important; 
+                          font-size: 10px;
+                          border-radius: 0px;
+                          border: none;
+                          margin: 0 !important;
+                        }
+                  - type: button
+                    name: "18.5\_\_\_\_\_\_"
+                    show_icon: false
+                    card_mod:
+                      style: |
+                        ha-card { 
+                          background: rgba(204, 255, 0, 0.6) !important; 
+                          height: 30px !important; 
+                          font-size: 10px;
+                          border-radius: 0px;
+                          border: none;
+                          margin: 0 !important;
+                        }
+                  - type: button
+                    name: "19.0\_\_\_\_\_\_"
+                    show_icon: false
+                    card_mod:
+                      style: |
+                        ha-card { 
+                          background: rgba(255, 255, 0, 0.6) !important; 
+                          height: 30px !important; 
+                          font-size: 10px;
+                          border-radius: 0px;
+                          border: none;
+                          margin: 0 !important;
+                        }
+                  - type: button
+                    name: "19.5\_\_\_\_\_\_"
+                    show_icon: false
+                    card_mod:
+                      style: |
+                        ha-card { 
+                          background: rgba(255, 204, 0, 0.6) !important; 
+                          height: 30px !important; 
+                          font-size: 10px;
+                          border-radius: 0px;
+                          border: none;
+                          margin: 0 !important;
+                        }
+                  - type: button
+                    name: "20.0\_\_\_\_\_\_"
+                    show_icon: false
+                    card_mod:
+                      style: |
+                        ha-card { 
+                          background: rgba(255, 102, 0, 0.6) !important; 
+                          height: 30px !important; 
+                          font-size: 10px;
+                          border-radius: 0px;
+                          border: none;
+                          margin: 0 !important;
+                        }
+                  - type: button
+                    name: ">20.5\_\_\_\_"
+                    show_icon: false
+                    card_mod:
+                      style: |
+                        ha-card { 
+                          background: rgba(255, 0, 0, 0.6) !important; 
+                          height: 30px !important; 
+                          font-size: 10px;
+                          border-radius: 0px;
+                          border: none;
+                          margin: 0 !important;
+                        }
+                card_mod:
+                  style: |
+                    :host {
+                      --grid-card-gap: 0px !important;
+                      --horizontal-stack-card-gap: 0px !important;
+                    }
+              - type: heading
+                heading: "One day:\_\_\_Min\_\_\_Mean\_\_\_Max\_\_\_Now"
+            grid_options:
+              columns: 24
+              rows: auto
+        column_span: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Main bedroom
+            heading_style: subtitle
+            icon: mdi:bed
+            badges:
+              - entity: sensor.atc_23b4_voltage
+              - entity: sensor.atc_23b4_humidity
+            tap_action:
+              action: navigate
+              navigation_path: areas-ensuite
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_main_bedroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_main_bedroom',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_main_bedroom', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_main_bedroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_main_bedroom',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_main_bedroom', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_main_bedroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_main_bedroom',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_main_bedroom', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.atc_23b4_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.atc_23b4_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.atc_23b4_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Main bedroom#2
+            heading_style: subtitle
+            icon: mdi:bed
+            badges:
+              - entity: sensor.main_bedroom_2_humidity
+            tap_action:
+              action: navigate
+              navigation_path: areas-ensuite
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_main_bedroom_2
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_main_bedroom_2',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_main_bedroom_2', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_main_bedroom_2
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_main_bedroom_2',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_main_bedroom_2', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_main_bedroom_2
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_main_bedroom_2',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_main_bedroom_2', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.main_bedroom_2_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.main_bedroom_2_temperature') |
+                  float(none) %}  {% if val is not none %}
+                    {{val | round(2)}}
+                  {% else %}
+                    Attr Not Found
+                  {% endif %}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.main_bedroom_2_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Ensuite bathroom
+            heading_style: subtitle
+            icon: mdi:shower-head
+            badges:
+              - entity: sensor.atc_e6fc_voltage
+              - entity: sensor.atc_e6fc_humidity
+            tap_action:
+              action: navigate
+              navigation_path: areas-ensuite_bathroom
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_ensuite_bathroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_ensuite_bathroom',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_ensuite_bathroom', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_ensuite_bathroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_ensuite_bathroom',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_ensuite_bathroom', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_ensuite_bathroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_ensuite_bathroom',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_ensuite_bathroom', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.atc_e6fc_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.atc_e6fc_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.atc_e6fc_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Family bathroom
+            heading_style: subtitle
+            icon: mdi:shower
+            badges:
+              - entity: sensor.atc_632b_voltage
+              - entity: sensor.atc_632b_humidity
+            tap_action:
+              action: navigate
+              navigation_path: areas-bathroom
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_family_bathroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_family_bathroom',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_family_bathroom', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_family_bathroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_family_bathroom',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_family_bathroom', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_family_bathroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_family_bathroom',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_family_bathroom', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.atc_632b_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.atc_632b_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.atc_632b_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Julia's bedroom
+            heading_style: subtitle
+            icon: mdi:bed
+            badges:
+              - entity: sensor.atc_04d6_voltage
+              - entity: sensor.atc_04d6_humidity
+            tap_action:
+              action: navigate
+              navigation_path: areas-julia_s_room
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_julias_bedroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_julias_bedroom',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_julias_bedroom', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_julias_bedroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_julias_bedroom',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_julias_bedroom', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_julias_bedroom
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_julias_bedroom',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_julias_bedroom', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.atc_04d6_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.atc_04d6_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.atc_04d6_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Office
+            heading_style: subtitle
+            icon: mdi:monitor
+            badges: null
+            tap_action:
+              action: navigate
+              navigation_path: areas-office
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_office
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_office',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_office', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_office
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_office',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_office', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_office
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_office',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_office', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.diy_sensor_4b62_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.diy_sensor_4b62_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.diy_sensor_4b62_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lounge
+            heading_style: subtitle
+            icon: mdi:sofa
+            badges:
+              - entity: sensor.lounge_humidity
+            tap_action:
+              action: navigate
+              navigation_path: areas-living_room
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_lounge
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_lounge',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_lounge', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_lounge
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_lounge',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_lounge', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_lounge
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_lounge',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_lounge', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.lounge_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.lounge_temperature') | float(none)
+                  %}  {% if val is not none %}
+                    {{ val | round(2) }}
+                  {% else %}
+                    Attr Not Found
+                  {% endif %}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.lounge_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Hall
+            heading_style: subtitle
+            icon: mdi:hanger
+            badges:
+              - entity: sensor.stiebel_eltron_isg_humidity_hk_1
+            tap_action:
+              action: navigate
+              navigation_path: areas-hall
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_hall
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_hall',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_hall', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_hall
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_hall',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_hall', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_hall
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_hall',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_hall', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stiebel_eltron_isg_actual_room_temperature_hk_1
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  states('sensor.stiebel_eltron_isg_actual_room_temperature_hk_1')
+                  | float(none) %} {{ val if val is not none else 'Attr Not
+                  Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.stiebel_eltron_isg_actual_room_temperature_hk_1') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Music Room
+            heading_style: subtitle
+            icon: mdi:account-music
+            badges:
+              - entity: sensor.atc_34ae_voltage
+              - entity: sensor.atc_34ae_humidity
+            tap_action:
+              action: navigate
+              navigation_path: areas-music_room
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_music_room
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_music_room',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_music_room', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_music_room
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_music_room',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_music_room', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_music_room
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_music_room',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_music_room', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.atc_34ae_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.atc_34ae_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.atc_34ae_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Kitchen
+            heading_style: subtitle
+            icon: mdi:stove
+            badges:
+              - entity: sensor.atc_6a43_voltage
+              - entity: sensor.atc_6a43_humidity
+            tap_action:
+              action: navigate
+              navigation_path: areas-kitchen
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_kitchen
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_kitchen', 'min_24') |
+                  float(none) %}  {{ val if val is not none else 'Attr Not
+                  Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_kitchen', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_kitchen
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_kitchen', 'mean_24')
+                  | float(none) %}  {{ val if val is not none else 'Attr Not
+                  Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_kitchen', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_kitchen
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_kitchen', 'max_24') |
+                  float(none) %}  {{ val if val is not none else 'Attr Not
+                  Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_kitchen', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.atc_6a43_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.atc_6a43_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.atc_6a43_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Outside
+            heading_style: subtitle
+            icon: mdi:space-invaders
+            tap_action:
+              action: navigate
+              navigation_path: areas-outside
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_outside
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_outside', 'min_24') |
+                  float(none) %}  {{ val if val is not none else 'Attr Not
+                  Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_outside', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_outside
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_outside', 'mean_24')
+                  | float(none) %}  {{ val if val is not none else 'Attr Not
+                  Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_outside', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_outside
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_outside', 'max_24') |
+                  float(none) %}  {{ val if val is not none else 'Attr Not
+                  Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_outside', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stiebel_eltron_isg_outdoor_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  states('sensor.stiebel_eltron_isg_outdoor_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.stiebel_eltron_isg_outdoor_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Greenhouse
+            heading_style: subtitle
+            icon: mdi:flower
+            badges:
+              - entity: sensor.mj6_fc99_voltage
+              - entity: sensor.mj6_fc99_humidity
+            tap_action:
+              action: navigate
+              navigation_path: areas-greenhouse
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_greenhouse
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_greenhouse',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_greenhouse', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_greenhouse
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_greenhouse',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_greenhouse', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_greenhouse
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val =
+                  state_attr('sensor.stat_mean_temperature_greenhouse',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_greenhouse', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.mj6_fc99_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.mj6_fc99_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.mj6_fc99_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+    cards: []
+    header: {}
+  - type: sections
+    max_columns: 4
+    title: Today
+    path: today
+    icon: mdi:home-thermometer
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: One day trends
+            heading_style: title
+          - type: custom:config-template-card
+            entities:
+              - sensor.dashboard_chart_refresh_fast
+            variables:
+              sorted_series: |
+                states['sensor.atc_04d6_temperature'] ? (
+                  [
+                    {id: 'sensor.atc_23b4_temperature', name: 'Ensuite', color: 'magenta'},
+                    {id: 'sensor.atc_04d6_temperature', name: "Julia's room", color: 'dodgerblue'},
+                    {id: 'sensor.atc_34ae_temperature', name: 'Music room', color: 'green'},
+                    {id: 'sensor.stiebel_eltron_isg_actual_room_temperature_hk_1', name: 'Hall', color: 'darkviolet'},
+                    {id: 'sensor.lounge_temperature', name: 'Lounge', color: 'plum'},
+                    {id: 'sensor.diy_sensor_4b62_temperature', name: 'Office', color: 'turquoise'},
+                    {id: 'sensor.atc_632b_temperature', name: 'Bathroom', color: 'crimson'},
+                    {id: 'sensor.atc_e6fc_temperature', name: 'Ensuite bathroom', color: 'goldenrod'},
+                    {id: 'sensor.atc_6a43_temperature', name: 'Kitchen', color: 'yellowgreen'}
+                  ]
+                  .sort((a, b) => (parseFloat(states[b.id].state) || 0) - (parseFloat(states[a.id].state) || 0))
+                  .map((room) => ({
+                    entity: room.id,
+                    name: room.name,
+                    color: room.color
+                  }))
+                ) : []
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              graph_span: 24h
+              header:
+                show: true
+                title: House Temperature (°C)
+                show_states: false
+              all_series_config:
+                type: line
+                curve: smooth
+                stroke_width: 2
+                opacity: 1
+                show:
+                  legend_value: false
+                group_by:
+                  func: avg
+                  duration: 5m
+              apex_config:
+                legend:
+                  show: true
+                xaxis:
+                  type: datetime
+                  labels:
+                    format: HH:mm
+                yaxis:
+                  min: 16
+                  max: 24
+                  tickAmount: 8
+                  decimalsInFloat: 0
+              series: ${vars.sorted_series}
+          - type: custom:config-template-card
+            entities:
+              - sensor.dashboard_chart_refresh_fast
+            variables:
+              sorted_series: |
+                states['sensor.atc_04d6_humidity'] ? (
+                  [
+                    {id: 'sensor.atc_23b4_humidity', name: 'Main bed', color: 'magenta'},
+                    {id: 'sensor.atc_04d6_humidity', name: "Julia's room", color: 'dodgerblue'},
+                    {id: 'sensor.atc_34ae_humidity', name: 'Music room', color: 'green'},
+                    {id: 'sensor.stiebel_eltron_isg_humidity_hk_1', name: 'Hall', color: 'darkviolet'},
+                    {id: 'sensor.lounge_humidity', name: 'Lounge', color: 'plum'},
+                    {id: 'sensor.atc_632b_humidity', name: 'Bathroom', color: 'crimson'},
+                    {id: 'sensor.atc_e6fc_humidity', name: 'Ensuite bathroom', color: 'goldenrod'},
+                    {id: 'sensor.atc_6a43_humidity', name: 'Kitchen', color: 'yellowgreen'}
+                  ]
+                  .sort((a, b) => (parseFloat(states[b.id].state) || 0) - (parseFloat(states[a.id].state) || 0))
+                  .map((room) => ({
+                    entity: room.id,
+                    name: room.name,
+                    color: room.color
+                  }))
+                ) : []
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              graph_span: 24h
+              header:
+                show: true
+                title: House Humidity (%)
+                show_states: false
+              update_interval: 10m
+              all_series_config:
+                type: line
+                curve: smooth
+                stroke_width: 2
+                opacity: 1
+                show:
+                  legend_value: false
+                group_by:
+                  func: avg
+                  duration: 10m
+              apex_config:
+                legend:
+                  show: true
+                xaxis:
+                  type: datetime
+                  labels:
+                    format: HH:mm
+                yaxis:
+                  min: 30
+                  max: 70
+                  tickAmount: 8
+                  decimalsInFloat: 0
+              series: ${vars.sorted_series}
+  - type: sections
+    max_columns: 3
+    title: Temperature graphs
+    path: temperature-graphs
+    icon: mdi:chart-areaspline-variant
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Long term
+            heading_style: title
+          - type: custom:config-template-card
+            entities:
+              - sensor.dashboard_chart_refresh
+            variables:
+              sorted_series: |
+                states['sensor.atc_04d6_temperature'] ? (
+                  [
+                    {id: 'sensor.atc_23b4_temperature', name: 'Main bed', color: 'magenta'},
+                    {id: 'sensor.atc_04d6_temperature', name: "Julia's room", color: 'dodgerblue'},
+                    {id: 'sensor.atc_34ae_temperature', name: 'Music room', color: 'green'},
+                    {id: 'sensor.stiebel_eltron_isg_actual_room_temperature_hk_1', name: 'Hall', color: 'darkviolet'},
+                    {id: 'sensor.lounge_temperature', name: 'Lounge', color: 'plum'},
+                    {id: 'sensor.diy_sensor_4b62_temperature', name: 'Office', color: 'turquoise'},
+                    {id: 'sensor.atc_632b_temperature', name: 'Bathroom', color: 'crimson'},
+                    {id: 'sensor.atc_e6fc_temperature', name: 'Ensuite bathroom', color: 'goldenrod'},
+                    {id: 'sensor.atc_6a43_temperature', name: 'Kitchen', color: 'yellowgreen'}
+                  ]
+                  .sort((a, b) => (parseFloat(states[b.id].state) || 0) - (parseFloat(states[a.id].state) || 0))
+                  .map((room) => ({
+                    entity: room.id,
+                    name: room.name,
+                    color: room.color
+                  }))
+                ) : []
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              graph_span: 4weeks
+              span:
+                start: week
+                offset: '-4weeks'
+              header:
+                show: true
+                title: Daily averages - Temperature (°C)
+                show_states: false
+              update_interval: 1h
+              all_series_config:
+                type: line
+                curve: smooth
+                stroke_width: 8
+                opacity: 0.7
+                statistics:
+                  type: mean
+                  period: day
+                show:
+                  legend_value: false
+              apex_config:
+                xaxis:
+                  type: datetime
+                  labels:
+                    format: dd MMM
+                yaxis:
+                  - min: 18
+                    max: 22
+                    decimalsInFloat: 0
+                    tickAmount: 4
+              series: ${vars.sorted_series}
+          - type: custom:config-template-card
+            entities:
+              - sensor.dashboard_chart_refresh
+            variables:
+              sorted_series: |
+                states['sensor.atc_04d6_temperature'] ? (
+                  [
+                    {id: 'sensor.atc_23b4_temperature', name: 'Main bed', color: 'magenta'},
+                    {id: 'sensor.atc_04d6_temperature', name: "Julia's room", color: 'dodgerblue'},
+                    {id: 'sensor.atc_34ae_temperature', name: 'Music room', color: 'green'},
+                    {id: 'sensor.stiebel_eltron_isg_actual_room_temperature_hk_1', name: 'Hall', color: 'darkviolet'},
+                    {id: 'sensor.lounge_temperature', name: 'Lounge', color: 'plum'},
+                    {id: 'sensor.diy_sensor_4b62_temperature', name: 'Office', color: 'turquoise'},
+                    {id: 'sensor.atc_632b_temperature', name: 'Bathroom', color: 'crimson'},
+                    {id: 'sensor.atc_e6fc_temperature', name: 'Ensuite bathroom', color: 'goldenrod'},
+                    {id: 'sensor.atc_6a43_temperature', name: 'Kitchen', color: 'yellowgreen'} ]
+                  .sort((a, b) => (parseFloat(states[b.id].state) || 0) - (parseFloat(states[a.id].state) || 0))
+                  .flatMap((room, index) => [
+                    {
+                      entity: room.id,
+                      name: room.name + " min",
+                      opacity: 0,
+                      stack_group: room.name,
+                      show: { in_legend: false },
+                      group_by: { func: 'min', duration: '1week' }
+                    },
+                    {
+                      entity: room.id,
+                      name: room.name,
+                      color: room.color,
+                      stack_group: room.name,
+                      group_by: { func: 'delta', duration: '1week' }
+                    }
+                  ])
+                ) : []
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              apex_config:
+                chart:
+                  height: 400px
+                yaxis:
+                  min: 16
+                  max: 24
+                  decimalsInFloat: 0
+                  tickAmount: 4
+                legend:
+                  show: true
+                marker:
+                  strokeWidth: 0
+                xaxis:
+                  type: datetime
+                  labels:
+                    format: dd MMM
+                  tickAmount: 5
+              graph_span: 5weeks
+              span:
+                start: week
+                offset: '-4weeks'
+              stacked: true
+              header:
+                show: true
+                title: Weekly Range - Temperature (°C)
+              all_series_config:
+                type: column
+                statistics:
+                  type: mean
+                  period: hour
+                show:
+                  in_header: false
+                  legend_value: false
+              series: ${vars.sorted_series}
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: ATC battery voltages
+    path: atc-battery-voltages
+    icon: mdi:battery
+    sections:
+      - type: grid
+        cards:
+          - type: custom:auto-entities
+            sort:
+              method: state
+              numeric: true
+              reverse: true
+            card_param: series
+            filter:
+              include:
+                - entity_id: sensor.atc_23b4_voltage
+                  options:
+                    name: Main bed
+                    color: magenta
+                - entity_id: sensor.atc_04d6_voltage
+                  options:
+                    name: Julia's room
+                    color: dodgerblue
+                - entity_id: sensor.atc_34ae_voltage
+                  options:
+                    name: Music room
+                    color: green
+                - entity_id: sensor.mj6_fc99_voltage
+                  options:
+                    name: Lounge
+                    color: plum
+                - entity_id: sensor.atc_632b_voltage
+                  options:
+                    name: Bathroom
+                    color: crimson
+                - entity_id: sensor.atc_e6fc_voltage
+                  options:
+                    name: Ensuite bathroom
+                    color: goldenrod
+                - entity_id: sensor.atc_6a43_voltage
+                  options:
+                    name: Kitchen
+                    color: yellowgreen
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              graph_span: 14d
+              header:
+                show: true
+                title: Daily averages - battery voltage (V)
+                show_states: false
+                colorize_states: true
+              update_interval: 1h
+              all_series_config:
+                type: line
+                curve: stepline
+                stroke_width: 1
+                statistics:
+                  type: mean
+                  period: day
+              yaxis:
+                - min: 2.5
+                  max: 3
+                  decimals: 1
+                  apex_config:
+                    tickAmount: 5
+              apex_config:
+                legend:
+                  show: true

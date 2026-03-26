@@ -1,0 +1,9 @@
+    SELECT round(AVG(mean), 2) as mean_24
+      FROM
+        statistics_short_term INNER JOIN statistics_meta ON 
+          statistics_short_term.metadata_id = statistics_meta.id 
+      WHERE
+        statistics_meta.statistic_id = 'sensor.stiebel_eltron_isg_humidity_hk_1' AND
+        start_ts >= strftime('%s', 'now', '-1 day')
+
+

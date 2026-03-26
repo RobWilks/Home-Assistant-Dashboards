@@ -1,0 +1,786 @@
+apexcharts_card_templates:
+  grey_grid:
+    header:
+      show: true
+    apex_config:
+      grid:
+        position: back
+        xaxis:
+          lines:
+            show: true
+        yaxis:
+          lines:
+            show: true
+        strokeDashArray: 0
+        borderColor: '#404040'
+      xaxis:
+        axisBorder:
+          show: true
+          color: '#404040'
+views:
+  - title: National Grid
+    sections:
+      - type: grid
+        cards:
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            header:
+              show: true
+              title: Electricity Price
+              show_states: false
+            series:
+              - entity: sensor.national_grid_current_sell_price
+                name: Electricity Sell Price
+                type: line
+                color: CornflowerBlue
+              - entity: sensor.electricitysellprice7d
+                name: 7 day mean
+                type: line
+                color: purple
+            graph_span: 72h
+            span:
+              start: day
+              offset: '-72h'
+            all_series_config:
+              stroke_width: 1
+              show:
+                legend_value: false
+            apex_config:
+              stroke:
+                curve: stepline
+                dashArray:
+                  - 1
+                  - 1
+              xaxis:
+                labels:
+                  show: true
+              yaxis:
+                title:
+                  text: GBP / MWh
+                decimalsInFloat: 0
+              legend:
+                show: true
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            header:
+              show: true
+              title: Carbon Intensity
+              show_states: false
+            series:
+              - entity: sensor.national_grid_current_carbon_intensity
+                name: Carbon Intensity
+                type: line
+                color: red
+              - entity: sensor.carbonintensity7d
+                name: 7 day mean
+                type: line
+                color: orange
+            graph_span: 72h
+            span:
+              start: day
+              offset: '-72h'
+            all_series_config:
+              stroke_width: 1
+              show:
+                legend_value: false
+            apex_config:
+              stroke:
+                curve: stepline
+                dashArray:
+                  - 1
+                  - 1
+              xaxis:
+                labels:
+                  show: true
+              yaxis:
+                title:
+                  text: gCO2e / kWh
+                decimalsInFloat: 0
+              legend:
+                show: true
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            header:
+              show: true
+              title: Grid Frequency
+              show_states: false
+            series:
+              - entity: sensor.gridfrequency500
+                name: Local
+                type: line
+                color: CornflowerBlue
+              - entity: sensor.national_grid_current_grid_frequency
+                name: National
+                type: line
+                color: yellow
+            graph_span: 48h
+            span:
+              start: day
+              offset: '-48h'
+            all_series_config:
+              stroke_width: 1
+              show:
+                legend_value: false
+            apex_config:
+              stroke:
+                curve: stepline
+                dashArray:
+                  - 1
+                  - 1
+              xaxis:
+                labels:
+                  show: true
+              yaxis:
+                title:
+                  text: Hz
+                min: 49.6
+                max: 50.4
+              legend:
+                show: true
+      - cards:
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            header:
+              show: true
+              title: Generation Mix
+              show_states: false
+            all_series_config:
+              type: line
+              stroke_width: 1
+              extend_to: false
+              show:
+                legend_value: false
+              statistics:
+                type: mean
+                period: hour
+                align: end
+            series:
+              - entity: sensor.national_grid_grid_generation_gas_mw
+                name: gas
+              - entity: sensor.national_grid_grid_generation_wind_mw
+                name: wind
+              - entity: sensor.national_grid_grid_generation_solar_mw
+                name: solar
+              - entity: sensor.national_grid_grid_generation_biomass_mw
+                name: biomass
+              - entity: sensor.national_grid_grid_generation_nuclear_mw
+                name: nuclear
+              - entity: sensor.national_grid_grid_generation_hydro_mw
+                name: hydro
+              - entity: sensor.national_grid_grid_generation_pumped_storage_mw
+                name: pumped storage
+              - entity: sensor.national_grid_total_transfers_mw
+                name: interconnector
+            graph_span: 72h
+            span:
+              end: day
+              offset: +0h
+            apex_config:
+              chart:
+                height: 400px
+              stroke:
+                curve: stepline
+                dashArray:
+                  - 1
+                  - 1
+              xaxis:
+                labels:
+                  show: true
+              yaxis:
+                title:
+                  text: MW
+                decimalsInFloat: 0
+              legend:
+                show: true
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            header:
+              show: true
+              title: Interconnectors
+              show_states: false
+            all_series_config:
+              type: line
+              stroke_width: 1
+              extend_to: false
+              show:
+                legend_value: false
+              statistics:
+                type: mean
+                period: hour
+                align: end
+            series:
+              - entity: sensor.national_grid_grid_generation_belgium_mw
+                name: Belgium
+              - entity: sensor.national_grid_grid_generation_netherlands_mw
+                name: Netherlands
+              - entity: sensor.national_grid_grid_generation_france_mw
+                name: France
+              - entity: sensor.national_grid_grid_generation_denmark_mw
+                name: Denmark
+              - entity: sensor.national_grid_grid_generation_ireland_mw
+                name: Ireland
+            graph_span: 72h
+            span:
+              end: day
+              offset: +0h
+            apex_config:
+              chart:
+                height: 400px
+              stroke:
+                curve: stepline
+                dashArray:
+                  - 1
+                  - 1
+              xaxis:
+                labels:
+                  show: true
+              yaxis:
+                title:
+                  text: MW
+                decimalsInFloat: 0
+              legend:
+                show: true
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            header:
+              show: true
+              title: Generation vs Demand
+              show_states: false
+            all_series_config:
+              type: line
+              stroke_width: 1
+              extend_to: false
+              show:
+                legend_value: false
+              statistics:
+                type: mean
+                period: hour
+                align: end
+            series:
+              - entity: sensor.national_grid_grid_generation_total_mw
+                name: Generation Total
+              - entity: sensor.national_grid_total_demand_mw
+                name: Demand
+              - entity: sensor.national_grid_total_transfers_mw
+                name: Transfers
+            graph_span: 72h
+            span:
+              end: day
+              offset: +0h
+            apex_config:
+              chart:
+                height: 400px
+              stroke:
+                curve: stepline
+                dashArray:
+                  - 1
+                  - 1
+              xaxis:
+                labels:
+                  show: true
+              yaxis:
+                title:
+                  text: MW
+                decimalsInFloat: 0
+              legend:
+                show: true
+          - type: custom:apexcharts-card
+            apex_config:
+              chart:
+                height: 400px
+              dataLabels:
+                enabled: true
+                formatter: |
+                  EVAL:function(value) {
+                    return value.toFixed(1) + "%";
+                  }                
+            chart_type: pie
+            header:
+              show: true
+              title: Percent energy mix
+              show_states: true
+              colorize_states: true
+            series:
+              - entity: sensor.national_grid_grid_generation_gas_mw
+                show:
+                  datalabels: percent
+                name: gas
+              - entity: sensor.national_grid_grid_generation_wind_mw
+                show:
+                  datalabels: percent
+                name: wind
+              - entity: sensor.national_grid_grid_generation_solar_mw
+                show:
+                  datalabels: percent
+                name: solar
+              - entity: sensor.national_grid_grid_generation_biomass_mw
+                show:
+                  datalabels: percent
+                name: biomass
+              - entity: sensor.national_grid_grid_generation_nuclear_mw
+                show:
+                  datalabels: percent
+                name: nuclear
+              - entity: sensor.national_grid_grid_generation_hydro_mw
+                show:
+                  datalabels: percent
+                name: hydro
+              - entity: sensor.national_grid_grid_generation_pumped_storage_mw
+                show:
+                  datalabels: percent
+                name: pumped storage
+              - entity: sensor.national_grid_total_transfers_mw
+                show:
+                  datalabels: percent
+                name: interconnector
+      - type: grid
+        cards:
+          - type: custom:apexcharts-card
+            config_templates: grey_grid
+            header:
+              show: true
+              title: Demand Forecast Day Ahead
+              show_states: false
+            series:
+              - entity: sensor.national_grid_grid_demand_three_day_forecast
+                name: Demand 3 Day
+                type: line
+                color: yellow
+                data_generator: >
+                  var now = new Date();
+
+                  return entity.attributes.forecast.filter(entry => new
+                  Date(entry.start_time) >= now).map(entry => {
+                    return {
+                      x: new Date(entry.start_time),
+                      y: entry.national_demand
+                    };
+                  });               
+              - entity: sensor.national_grid_grid_demand_day_ahead_forecast
+                name: National Demand Day Ahead
+                type: line
+                color: red
+                data_generator: >
+                  var now = new Date();
+
+                  return entity.attributes.forecast.filter(entry => new
+                  Date(entry.start_time) >= now).map(entry => {
+                    return {
+                      x: new Date(entry.start_time),
+                      y: entry.national_demand
+                    };
+                  }); 
+              - entity: sensor.national_grid_grid_demand_day_ahead_forecast
+                name: Transmission Demand Day Ahead
+                type: line
+                color: orange
+                data_generator: >
+                  var now = new Date();
+
+                  return entity.attributes.forecast.filter(entry => new
+                  Date(entry.start_time) >= now).map(entry => {
+                    return {
+                      x: new Date(entry.start_time),
+                      y: entry.transmission_demand
+                    };
+                  });                                   
+            graph_span: 72h
+            span:
+              start: day
+              offset: +0h
+            all_series_config:
+              stroke_width: 1
+              show:
+                legend_value: false
+            apex_config:
+              stroke:
+                curve: stepline
+                dashArray:
+                  - 1
+                  - 1
+              xaxis:
+                labels:
+                  show: true
+              yaxis:
+                title:
+                  text: MW
+              legend:
+                show: true
+              annotations:
+                yaxis:
+                  - 'y': 5000
+                    strokeDashArray: 0
+                    borderColor: '#00E396'
+                    label:
+                      borderColor: '#00E396'
+                      style:
+                        color: '#fff'
+                        background: '#00E396'
+                      text: Low
+                  - 'y': 8000
+                    strokeDashArray: 0
+                    borderColor: '#FEB019'
+                    label:
+                      borderColor: '#FEB019'
+                      style:
+                        color: '#fff'
+                        background: '#FEB019'
+                      text: Moderate
+                  - 'y': 11000
+                    strokeDashArray: 0
+                    borderColor: '#FF4560'
+                    label:
+                      borderColor: '#FF4560'
+                      style:
+                        color: '#fff'
+                        background: '#FF4560'
+                      text: High
+          - type: custom:config-template-card
+            entities:
+              - sensor.national_grid_tomorrow_wind_peak_time
+            variables:
+              WIND_PEAK_TODAY: states['sensor.national_grid_today_wind_peak_time'].state
+              WIND_PEAK_TOMORROW: states['sensor.national_grid_tomorrow_wind_peak_time'].state
+              WIND7DAY10PERCENTILE: states['sensor.wind7day10percentile'].state
+              WIND7DAY50PERCENTILE: states['sensor.wind7day50percentile'].state
+              WIND7DAY90PERCENTILE: states['sensor.wind7day90percentile'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              header:
+                show: true
+                title: Wind Forecast 3 Day - Percentiles from 7d history
+                show_states: false
+              series:
+                - entity: sensor.national_grid_wind_forecast
+                  name: Latest
+                  type: line
+                  color: green
+                  data_generator: >
+                    var now = new Date();
+
+                    return entity.attributes.forecast.filter(entry => new
+                    Date(entry.start_time) >= now).map(entry => {
+                      return {
+                        x: new Date(entry.start_time),
+                        y: entry.generation
+                      };
+                    });
+                - entity: sensor.national_grid_wind_forecast_earliest
+                  name: Earliest
+                  type: line
+                  color: yellow
+                  data_generator: >
+                    var now = new Date();
+
+                    return entity.attributes.forecast.filter(entry => new
+                    Date(entry.start_time) >= now).map(entry => {
+                      return {
+                        x: new Date(entry.start_time),
+                        y: entry.generation
+                      };
+                    });     
+                - entity: sensor.national_grid_wind_forecast_now_to_three_day
+                  name: Now to 3 day
+                  type: line
+                  color: magenta
+                  data_generator: >
+                    var now = new Date();
+
+                    return entity.attributes.forecast.filter(entry => new
+                    Date(entry.start_time) >= now).map(entry => {
+                      return {
+                        x: new Date(entry.start_time),
+                        y: entry.generation
+                      };
+                    });                    
+              graph_span: 72h
+              span:
+                start: day
+                offset: +0h
+              all_series_config:
+                stroke_width: 1
+                show:
+                  legend_value: false
+              apex_config:
+                stroke:
+                  curve: stepline
+                  dashArray:
+                    - 1
+                    - 1
+                xaxis:
+                  labels:
+                    show: true
+                yaxis:
+                  title:
+                    text: MW
+                legend:
+                  show: true
+                annotations:
+                  xaxis:
+                    - x: ${new Date(WIND_PEAK_TODAY).getTime()}
+                      strokeDashArray: 0
+                      borderColor: '#FF00FF'
+                      label:
+                        borderColor: '#FF00FF'
+                        style:
+                          color: '#fff'
+                          background: '#FF00FF'
+                        text: Max
+                    - x: ${new Date(WIND_PEAK_TOMORROW).getTime()}
+                      strokeDashArray: 0
+                      borderColor: '#FF00FF'
+                      label:
+                        borderColor: '#FF00FF'
+                        style:
+                          color: '#fff'
+                          background: '#FF00FF'
+                        text: Max
+                  yaxis:
+                    - 'y': ${WIND7DAY10PERCENTILE}
+                      strokeDashArray: 0
+                      borderColor: '#00E396'
+                      label:
+                        borderColor: '#00E396'
+                        style:
+                          color: '#fff'
+                          background: '#00E396'
+                        text: 10%
+                        textAnchor: centre
+                        offsetX: -300
+                    - 'y': ${WIND7DAY50PERCENTILE}
+                      strokeDashArray: 0
+                      borderColor: '#FEB019'
+                      label:
+                        borderColor: '#FEB019'
+                        style:
+                          color: '#fff'
+                          background: '#FEB019'
+                        text: 50%
+                        textAnchor: centre
+                        offsetX: -300
+                    - 'y': ${WIND7DAY90PERCENTILE}
+                      strokeDashArray: 0
+                      borderColor: '#FF4560'
+                      label:
+                        borderColor: '#FF4560'
+                        style:
+                          color: '#fff'
+                          background: '#FF4560'
+                        text: 90%
+                        textAnchor: centre
+                        offsetX: -300
+          - type: custom:config-template-card
+            entities:
+              - sensor.national_grid_tomorrow_wind_peak_time
+            variables:
+              WIND_PEAK_TODAY: states['sensor.national_grid_today_wind_peak_time'].state
+              WIND_PEAK_TOMORROW: states['sensor.national_grid_tomorrow_wind_peak_time'].state
+              WIND7DAY10PERCENTILE: states['sensor.wind7day10percentile'].state
+              WIND7DAY50PERCENTILE: states['sensor.wind7day50percentile'].state
+              WIND7DAY90PERCENTILE: states['sensor.wind7day90percentile'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              header:
+                show: true
+                title: Wind Forecast 14 Day - Percentiles from 7d history
+                show_states: false
+              series:
+                - entity: sensor.national_grid_wind_forecast_fourteen_day
+                  name: 14 day
+                  type: line
+                  color: orange
+                  data_generator: >
+                    var now = new Date();
+
+                    return entity.attributes.forecast.filter(entry => new
+                    Date(entry.start_time) >= now).map(entry => {
+                      return {
+                        x: new Date(entry.start_time),
+                        y: entry.generation
+                      };
+                    });  
+              graph_span: 336h
+              span:
+                start: day
+                offset: +0h
+              all_series_config:
+                stroke_width: 1
+                show:
+                  legend_value: false
+              apex_config:
+                stroke:
+                  curve: stepline
+                  dashArray:
+                    - 1
+                    - 1
+                xaxis:
+                  labels:
+                    show: true
+                yaxis:
+                  title:
+                    text: MW
+                legend:
+                  show: true
+                annotations:
+                  yaxis:
+                    - 'y': ${WIND7DAY10PERCENTILE}
+                      strokeDashArray: 0
+                      borderColor: '#00E396'
+                      label:
+                        borderColor: '#00E396'
+                        style:
+                          color: '#fff'
+                          background: '#00E396'
+                        text: 10%
+                        textAnchor: centre
+                        offsetX: -300
+                    - 'y': ${WIND7DAY50PERCENTILE}
+                      strokeDashArray: 0
+                      borderColor: '#FEB019'
+                      label:
+                        borderColor: '#FEB019'
+                        style:
+                          color: '#fff'
+                          background: '#FEB019'
+                        text: 50%
+                        textAnchor: centre
+                        offsetX: -300
+                    - 'y': ${WIND7DAY90PERCENTILE}
+                      strokeDashArray: 0
+                      borderColor: '#FF4560'
+                      label:
+                        borderColor: '#FF4560'
+                        style:
+                          color: '#fff'
+                          background: '#FF4560'
+                        text: 90%
+                        textAnchor: centre
+                        offsetX: -300
+          - type: custom:config-template-card
+            config_templates: grey_grid
+            entities:
+              - sensor.national_grid_embedded_solar_forecast_three_day
+              - sensor.solar7daymax
+            variables:
+              SOLAR_MAX: states['sensor.solar7daymax'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              header:
+                show: true
+                title: Solar Forecast 3 Day - Max from 7d History
+                show_states: false
+              series:
+                - entity: sensor.national_grid_embedded_solar_forecast_three_day
+                  name: Three Day
+                  type: line
+                  color: green
+                  data_generator: >
+                    var now = new Date();
+
+                    return entity.attributes.forecast.filter(entry => new
+                    Date(entry.start_time) >= now).map(entry => {
+                      return {
+                        x: new Date(entry.start_time),
+                        y: entry.generation
+                      };
+                    });              
+              graph_span: 72h
+              span:
+                start: day
+                offset: +0h
+              all_series_config:
+                stroke_width: 1
+                show:
+                  legend_value: false
+              apex_config:
+                stroke:
+                  curve: stepline
+                  dashArray:
+                    - 1
+                    - 1
+                xaxis:
+                  labels:
+                    show: true
+                yaxis:
+                  title:
+                    text: MW
+                  max: ${Math.ceil(parseFloat(SOLAR_MAX) / 1000) * 1000}
+                  forceNiceScale: true
+                legend:
+                  show: true
+                annotations:
+                  yaxis:
+                    - 'y': ${SOLAR_MAX}
+                      strokeDashArray: 0
+                      borderColor: '#FF4560'
+                      label:
+                        borderColor: '#FF4560'
+                        style:
+                          color: '#fff'
+                          background: '#FF4560'
+                        text: Max
+          - type: custom:config-template-card
+            entities:
+              - sensor.national_grid_tomorrow_wind_peak_time
+            variables:
+              SOLAR_MAX: states['sensor.solar7daymax'].state
+            card:
+              type: custom:apexcharts-card
+              config_templates: grey_grid
+              header:
+                show: true
+                title: Solar Forecast 14 Day - Max from 7d History
+                show_states: false
+              series:
+                - entity: sensor.national_grid_embedded_solar_forecast_fourteen_day
+                  name: 14 day
+                  type: line
+                  color: orange
+                  data_generator: >
+                    var now = new Date();
+
+                    return entity.attributes.forecast.filter(entry => new
+                    Date(entry.start_time) >= now).map(entry => {
+                      return {
+                        x: new Date(entry.start_time),
+                        y: entry.generation
+                      };
+                    });  
+              graph_span: 336h
+              span:
+                start: day
+                offset: +0h
+              all_series_config:
+                stroke_width: 1
+                show:
+                  legend_value: false
+              apex_config:
+                stroke:
+                  curve: stepline
+                  dashArray:
+                    - 1
+                    - 1
+                xaxis:
+                  labels:
+                    show: true
+                yaxis:
+                  title:
+                    text: MW
+                  max: ${Math.ceil(parseFloat(SOLAR_MAX) / 1000) * 1000}
+                  forceNiceScale: true
+                legend:
+                  show: true
+                annotations:
+                  yaxis:
+                    - 'y': ${SOLAR_MAX}
+                      strokeDashArray: 0
+                      borderColor: '#FF4560'
+                      label:
+                        borderColor: '#FF4560'
+                        style:
+                          color: '#fff'
+                          background: '#FF4560'
+                        text: Max                     

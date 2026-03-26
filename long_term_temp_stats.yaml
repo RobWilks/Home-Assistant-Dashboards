@@ -1,0 +1,161 @@
+# configuration.yaml to create sensor for daily temperature and humidity statistics
+# configured via GUI since only this route permits change of polling interval
+
+- name: stat_mean_temperature_kitchen
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.atc_6a43_temperature' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: 997fdbe5-6438-4f1a-b639-fae2a73790af
+
+- name: stat_mean_temperature_lounge
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.mj6_fc99_temperature' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: 1f66fe18-71de-4dec-96d4-7039ca297dd5
+
+- name: stat_mean_temperature_hall
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.stiebel_eltron_isg_actual_room_temperature_hk_1' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: d59f9c6c-98a4-4c3c-b10a-caaad5c80d83
+
+- name: stat_mean_temperature_music_room
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.atc_34ae_temperature' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: ea92bc47-2ddb-4933-936e-cfb00d91ba4c
+
+- name: stat_mean_temperature_ensuite_bathroom
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.atc_e6fc_temperature' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: 83e670aa-78bb-42af-8ed2-9c2a280dc3aa    
+
+- name: stat_mean_temperature_family_bathroom
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.atc_632b_temperature' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: 7e19fcdb-2ccf-46b7-9471-888e43b8525d 
+
+- name: stat_mean_temperature_main_bedroom
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.atc_23b4_temperature' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: efcd0602-2834-4dce-bed4-931d99cc9601
+
+
+- name: stat_mean_temperature_main_bedroom_2
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.esp32_blink_bme280_temperature' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: ef7dbb7b-8344-4beb-807b-59fc3716da0a   
+
+- name: stat_mean_temperature_julias_bedroom
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.atc_04d6_temperature' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: 20c8c7f1-7c0d-4f8e-8b2a-5c3e4f5a6b7c
+
+- name: stat_mean_temperature_office
+  query: >
+    SELECT round(AVG(mean), 2) as mean_24, round(MIN(min), 2) as min_24, round(MAX(max), 2) as max_24
+    FROM
+      statistics_short_term INNER JOIN statistics_meta ON 
+        statistics_short_term.metadata_id = statistics_meta.id 
+    WHERE
+      statistics_meta.statistic_id = 'sensor.diy_sensor_4b62_temperature' AND
+      start_ts >= strftime('%s', 'now', '-1 day')
+  column: "mean_24"        
+  unit_of_measurement: "°C"
+  device_class: "temperature"
+  state_class: "measurement"
+  unique_id: f1cf0ef9-1121-4e1e-a95f-8ef0e677f547
+
+
+
+
+
+
+
+

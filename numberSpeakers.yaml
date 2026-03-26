@@ -1,0 +1,7 @@
+- sensor:
+  - unit_of_measurement: boolean
+    default_entity_id: sensor.count_of_speakers_on
+    name: Count of Speakers Playing
+    state: >
+      {{ expand(state_attr('media_player.speakers', 'entity_id') or []) | selectattr('state', 'eq', 'playing') | list | count }}
+

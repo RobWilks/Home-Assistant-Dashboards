@@ -1,0 +1,216 @@
+  - sensor:
+    - name: "producedHeatingYear"
+      unique_id: 97558332-8184-49c3-91d5-d18b1a46c151
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.stiebel_eltron_isg_produced_heating_total') | float(0) %}
+        {% set old = states('sensor.produced_heating_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}
+
+  - sensor:
+    - name: "producedWaterHeatingYear"
+      unique_id: 371483a6-d906-4627-bdc5-4aab0631f4e8
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.stiebel_eltron_isg_produced_water_heating_total') | float(0) %}
+        {% set old = states('sensor.produced_water_heating_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}
+
+  - sensor:
+    - name: "consumedHeatingYear"
+      unique_id: 4919d85b-f97e-4c43-987f-f1dc3b0f1a8b
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.stiebel_eltron_isg_consumed_heating_total') | float(0) %}
+        {% set old = states('sensor.consumed_heating_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}
+
+  - sensor:
+    - name: "consumedWaterHeatingYear"
+      unique_id: f6b23957-cca9-464b-bf19-0f2f51104c36
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.stiebel_eltron_isg_consumed_water_heating_total') | float(0) %}
+        {% set old = states('sensor.consumed_water_heating_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}                
+
+
+  - sensor:
+    - name: "producedSolarYear"
+      unique_id: afdb85c6-a8be-4432-be86-dd42ed5f9d98
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.wilkinsonsolar_solar_export') | float(0) %}
+        {% set old = states('sensor.produced_solar_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}   
+
+  - sensor:
+    - name: "gridImportYear"
+      unique_id: 087b985e-67a9-4381-979d-b540a1932ce7
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.wilkinsonsolar_site_import') | float(0) %}
+        {% set old = states('sensor.grid_import_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}   
+
+
+  - sensor:
+    - name: "gridExportYear"
+      unique_id: e5a6a497-7b98-4fb0-bdd1-29fbfd6a58b9
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.wilkinsonsolar_site_export') | float(0) %}
+        {% set old = states('sensor.grid_export_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}     
+
+  - sensor:
+    - name: "batteryImportYear"
+      unique_id: b1349ed4-6aa7-45e1-9b28-55255ba40cef
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.wilkinsonsolar_tg124141001khg_battery_import') | float(0) %}
+        {% set old = states('sensor.battery_import_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}   
+
+
+  - sensor:
+    - name: "batteryExportYear"
+      unique_id: abe0e669-893b-4545-8605-de3ee563270b
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.wilkinsonsolar_tg124141001khg_battery_export') | float(0) %}
+        {% set old = states('sensor.battery_export_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}                
+
+  - sensor:
+    - name: "loadImportYear"
+      unique_id: 78f2ee19-87e1-4340-9e0a-faea41d55010
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.wilkinsonsolar_load_import') | float(0) %}
+        {% set old = states('sensor.load_import_year_ago') | float(none) %}
+        
+        {% if old is not none %}
+          {{ (current - old) | round(-1) }}
+        {% else %}
+          unavailable
+        {% endif %}  
+
+# Envoy lifetime sensors yearly totals
+# unit MWh converted to kWh
+# Envoy data are intermittent so use old value if current is unavailable
+# Year-old value updates daily using Update SQL entities in automation.yaml
+
+  - trigger:
+    - platform: time_pattern
+      # This will trigger every 10 minutes
+      minutes: "/10"
+    sensor:
+    - name: "energy_consumption_year"
+      unique_id: 091ca257-cccb-4774-8131-a436b38427ab
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.envoy_482333049062_lifetime_energy_consumption') %}
+        {% set old = states('sensor.energy_consumption_year_ago') %}
+        {% if (current not in ['unavailable', 'unknown']) and 
+              (old not in ['unavailable', 'unknown']) %}
+            {{ (((current | float(0)) - (old | float(0))) * 1000) | round(-1) }}
+        {% else %}
+          {{ this.state | float(0) }}
+        {% endif %}
+
+  - trigger:
+    - platform: time_pattern
+      minutes: "/10"
+    sensor:
+    - name: "energy_production_year"
+      unique_id: 68050176-979f-4f1c-bacf-3aaa5c111435
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.envoy_482333049062_lifetime_energy_production') %}
+        {% set old = states('sensor.energy_production_year_ago') %}
+        {% if (current not in ['unavailable', 'unknown']) and 
+              (old not in ['unavailable', 'unknown']) %}
+            {{ (((current | float(0)) - (old | float(0))) * 1000) | round(-1) }}
+        {% else %}
+          {{ this.state | float(0) }}
+        {% endif %}
+
+  - trigger:
+    - platform: time_pattern
+      minutes: "/10"
+    sensor:
+    - name: "net_energy_consumption_year"
+      unique_id: 2c20311d-3c05-418a-88b4-ddec3faad102
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.envoy_482333049062_lifetime_net_energy_consumption') %}
+        {% set old = states('sensor.net_energy_consumption_year_ago') %}
+        {% if (current not in ['unavailable', 'unknown']) and 
+              (old not in ['unavailable', 'unknown']) %}
+            {{ (((current | float(0)) - (old | float(0))) * 1000) | round(-1) }}
+        {% else %}
+          {{ this.state | float(0) }}
+        {% endif %}
+
+  - trigger:
+    - platform: time_pattern
+      minutes: "/10"
+    sensor:
+    - name: "net_energy_production_year"
+      unique_id: a6b66068-525f-4784-b7b6-184e584017a0
+      unit_of_measurement: "kWh"
+      state: >
+        {% set current = states('sensor.envoy_482333049062_lifetime_net_energy_production') %}
+        {% set old = states('sensor.net_energy_production_year_ago') %}
+        {% if (current not in ['unavailable', 'unknown']) and 
+              (old not in ['unavailable', 'unknown']) %}
+            {{ (((current | float(0)) - (old | float(0))) * 1000) | round(-1) }}
+        {% else %}
+          {{ this.state | float(0) }}
+        {% endif %}                  

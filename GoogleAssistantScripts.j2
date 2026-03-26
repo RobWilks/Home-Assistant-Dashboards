@@ -1,0 +1,50 @@
+
+#24h humidity sensor stats
+
+{% set sensors = states.sensor.humiditysensor24group.attributes.entity_id %} 
+{# 1. Get the state string for each entity #} 
+{% set states_list = sensors
+  | map('states')
+  | map('float', default=0)
+  | list %}
+{# 2. Filter out any state that is not a number (e.g., 'unavailable', 'unknown') #} {% set valid_values = states_list | select('is_number') | list %} {# 3. Only calculate the average if we have at least one valid reading #} {% if valid_values | count > 0 %}
+  {# Convert valid states to float numbers and calculate the average #}
+  Over the last day the average house humidity has been {{ valid_values | map('float') | average | round(1) }} percent
+{% else %}
+  {# If all sensors are invalid, set the sensor state to 'unavailable' #}
+  unavailable
+{% endif %} {% set sorted_list = expand(sensors)
+  | selectattr('state', 'is_number')
+  | sort(attribute='state', reverse=true) %}
+{% set max_sensor = sorted_list | first %} {% set max_area = area_name(max_sensor.entity_id) %} 
+{% set min_sensor = sorted_list | last %} {% set min_area = area_name(min_sensor.entity_id) %} The most humid room was 
+{{ max_area | default('unavailable') }} at {{ max_sensor.state | round(1) | default('unavailable') }} percent and the least was 
+{{ min_area | default('unavailable') }} at {{ min_sensor.state | round(1) | default('unavailable') }}
+
+
+#24h temp sensor stats
+
+    {% set sensors = states.sensor.temperaturesensor24group.attributes.entity_id %} {#
+    1. Get the state string for each entity #} {% set states_list = sensors
+      | map('states')
+      | map('float', default=0)
+      | list %}
+    {# 2. Filter out any state that is not a number (e.g., 'unavailable',
+    'unknown') #} {% set valid_temps = states_list | select('is_number') | list
+    %} {# 3. Only calculate the average if we have at least one valid reading #}
+    {% if valid_temps | count > 0 %}
+      {# Convert valid states to float numbers and calculate the average #}
+      Over the last day the average house temperature has been {{ valid_temps | map('float') | average | round(1) }} degrees C
+    {% else %}
+      {# If all sensors are invalid, set the sensor state to 'unavailable' #}
+      unavailable
+    {% endif %} {% set sorted_list = expand(sensors)
+      | selectattr('state', 'is_number')
+      | sort(attribute='state', reverse=true) %}
+    {% set max_sensor = sorted_list | first %} {% set max_area =
+    area_name(max_sensor.entity_id) %} {% set min_sensor = sorted_list | last %}
+    {% set min_area = area_name(min_sensor.entity_id) %} The hottest room was {{
+    max_area | default('unavailable') }} at {{ max_sensor.state | round(1) |
+    default('unavailable') }} degrees C and the coolest was {{ min_area |
+    default('unavailable') }} at {{ min_sensor.state | round(1) |
+    default('unavailable') }}
