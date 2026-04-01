@@ -1,0 +1,178 @@
+- id: '1749318240243'
+  alias: Play BBC World Service
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - switch.shelly1minig3_3030f9ea7764_switch_0
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.mouche
+    data:
+      media_content_id: media-source://radio_browser/98adecf7-2683-4408-9be7-02d3f9098eb8
+      media_content_type: audio/mpeg
+    metadata:
+      title: BBC World Service
+      thumbnail: http://cdn-profiles.tunein.com/s24948/images/logoq.jpg?t=1
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://radio_browser
+      - media_content_type: music
+        media_content_id: media-source://radio_browser/country/GB
+  mode: single
+- id: '1760970888388'
+  alias: timePatternTest
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    minutes: /1
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    enabled: true
+  mode: single
+- id: '1769362668528'
+  alias: Update SQL heat and power entities
+  description: ''
+  triggers:
+  - trigger: time
+    at: 01:23:45
+  conditions: []
+  actions:
+  - action: homeassistant.update_entity
+    data:
+      entity_id:
+      - sensor.battery_export_year_ago
+      - sensor.battery_import_year_ago
+      - sensor.consumed_heating_year_ago
+      - sensor.consumed_water_heating_year_ago
+      - sensor.grid_export_year_ago
+      - sensor.grid_import_year_ago
+      - sensor.load_import_year_ago
+      - sensor.produced_heating_year_ago
+      - sensor.produced_water_heating_year_ago
+      - sensor.produced_solar_year_ago
+      - sensor.electricitymeterimportoneyear
+      - sensor.electricitymeterexportoneyear
+  mode: single
+- id: '1769942408553'
+  alias: Update SQL room humidity entities
+  description: ''
+  triggers:
+  - trigger: time
+    at: 02:34:00
+  conditions: []
+  actions:
+  - action: homeassistant.update_entity
+    metadata: {}
+    data:
+      entity_id:
+      - sensor.stat_mean_humidity_family_bathroom
+      - sensor.stat_mean_humidity_hall
+      - sensor.stat_mean_humidity_ensuite_bathroom
+      - sensor.stat_mean_humidity_julias_bedroom
+      - sensor.stat_mean_humidity_kitchen
+      - sensor.stat_mean_humidity_lounge
+      - sensor.stat_mean_humidity_main_bedroom_2
+      - sensor.stat_mean_humidity_main_bedroom
+      - sensor.stat_mean_humidity_music_room
+      - sensor.stat_mean_humidity_greenhouse
+  mode: single
+- id: '1769942949783'
+  alias: Update SQL room temperature entities
+  description: ''
+  triggers:
+  - trigger: time
+    at: 03:45:00
+  conditions: []
+  actions:
+  - action: homeassistant.update_entity
+    metadata: {}
+    data:
+      entity_id:
+      - sensor.stat_mean_temperature_ensuite_bathroom
+      - sensor.stat_mean_temperature_family_bathroom
+      - sensor.stat_mean_temperature_hall
+      - sensor.stat_mean_temperature_julias_bedroom
+      - sensor.stat_mean_temperature_kitchen
+      - sensor.stat_mean_temperature_lounge
+      - sensor.stat_mean_temperature_main_bedroom_2
+      - sensor.stat_mean_temperature_main_bedroom
+      - sensor.stat_mean_temperature_music_room
+      - sensor.stat_mean_temperature_office
+      - sensor.stat_mean_temperature_outside
+      - sensor.stat_mean_temperature_greenhouse
+  mode: single
+- id: '1769980114046'
+  alias: Update SQLrecords
+  description: ''
+  triggers:
+  - trigger: time
+    at: 04:56:00
+  conditions: []
+  actions:
+  - action: homeassistant.update_entity
+    metadata: {}
+    data:
+      entity_id:
+      - sensor.stat_max_electricity_consumption
+      - sensor.stat_max_grid_import
+      - sensor.stat_max_load_import
+      - sensor.stat_max_electricity_export
+      - sensor.stat_max_hp_consumed
+      - sensor.stat_max_produced_heating
+      - sensor.stat_max_solar_export
+      - sensor.stat_min_temperature_outdoor
+      - sensor.stat_max_temperature_outdoor
+      - sensor.stat_max_diurnal_range_outdoor
+      - sensor.stat_max_daily_electricity_cost
+      - sensor.stat_max_daily_electricity_export_cost
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - event: update_daily_records
+    event_data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.yesterday_new_records
+      state:
+      - No new records
+      attribute: records
+  - action: notify.mobile_app_sm_a505fn
+    data:
+      message: New record yesterday {{ state_attr('sensor.yesterday_new_records',
+        'records') }}
+  mode: single
+- id: '1770147649002'
+  alias: Update SQL max monthly electricity cost and solar export
+  description: ''
+  triggers:
+  - trigger: time
+    at: 00:01:23
+  conditions: []
+  actions:
+  - action: homeassistant.update_entity
+    metadata: {}
+    data:
+      entity_id:
+      - sensor.stat_max_electricity_import_cost_month
+      - sensor.stat_max_electricity_export_cost_month
+      - sensor.stat_max_solar_export_month
+  mode: single

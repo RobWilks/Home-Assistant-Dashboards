@@ -488,21 +488,57 @@ automation soundDoorBell:
         target:
           entity_id: media_player.mouche   
     
-automation doorBellPrivacy:
+automation doorBellPrivacyOn:
   - alias: "privacyOn"
     id: "automation_11"
     trigger:
       - platform: state
-        entity_id: switch.doorbell_privacy
+        entity_id: binary_sensor.all_pir_sensors
         from: "on"
         to: "off"
-    mode: "restart" #if triggered several times reset the delay countdown
-    actions:
-      - delay: 
-          seconds: 133 
+        # PIR sensors break their circuit when triggered
+      - platform: state
+        entity_id: input_boolean.alarm_set
+        to: "off"   
+    condition:
+      - condition: state
+        entity_id: input_boolean.alarm_set
+        state: "off"
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: binary_sensor.all_pir_sensors
+            state: "on"
+          - condition: template
+            # Checks if the PIR group was last changed less than 600 seconds (10 mins) ago
+            value_template: >
+              {{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.all_pir_sensors.last_changed)) < 600 }}             
+    action:
       - service: switch.turn_on
-        entity_id: switch.doorbell_privacy           
-          
+        target:
+          entity_id: switch.doorbell_privacy      
+    mode: restart #if triggered several times reset the delay countdown
+
+automation doorBellPrivacyOff:
+    alias: "privacyOff"
+    id: "automation_11b"
+    description: "Turn off privacy if alarm is set or no motion for 30 mins"
+    trigger:
+      - platform: state
+        entity_id: input_boolean.alarm_set
+        to: "on"
+      - platform: state
+        entity_id: binary_sensor.all_pir_sensors
+        to: "on"
+        for:
+          minutes: 30
+    action:
+      - service: switch.turn_off
+        target:
+          entity_id: switch.doorbell_privacy
+    mode: parallel
+
+
 automation porchLightOn:
   - alias: "porch_light_on"
     id: "automation_12"
@@ -587,7 +623,8 @@ automation all lights off:
         data:
           entities:
             input_boolean.all_lights_off: "off"          
-            
+
+
 automation trigger alarm:
   - alias: "trigger_alarm"    
     id: "automation_16"
@@ -722,6 +759,7 @@ recorder:
       - weather
       - zone 
     entity_globs:             #globs is a key to denote wildcard pattern
+      - sensor.adc_*          #tests on esp32 adc
       - sensor.random_*       #random times for lights when away    
       - sensor.energy_*       #short-term forecast data
       - sensor.octopus_energy_electricity_19m1039794_1050003203800_*  #information on tariffs

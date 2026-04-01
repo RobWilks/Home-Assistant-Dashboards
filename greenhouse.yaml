@@ -231,17 +231,17 @@ views:
           colorize_states: true
         yaxis:
           - id: temps
-            min: -4
-            max: 32
+            min: 2
+            max: 20
             decimals: 0
             apex_config:
               tickAmount: 9
           - id: moisture
-            min: 10
-            max: 19
+            min: 13.6
+            max: 15.4
             apex_config:
               tickAmount: 9
-            decimals: 0
+            decimals: 1
             opposite: true
           - id: conductivity
             min: 100

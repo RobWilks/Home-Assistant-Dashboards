@@ -2405,6 +2405,210 @@ views:
       - type: grid
         cards:
           - type: heading
+            heading: Soil
+            heading_style: subtitle
+            icon: mdi:space-invaders
+            badges:
+              - entity: sensor.ss_e139_voltage
+              - entity: sensor.ss_e139_moisture
+            tap_action:
+              action: navigate
+              navigation_path: areas-outside
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_soil
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_soil',
+                  'min_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_soil', 'min_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_soil
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_soil',
+                  'mean_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_soil', 'mean_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.stat_mean_temperature_soil
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = state_attr('sensor.stat_mean_temperature_soil',
+                  'max_24') | float(none) %}  {{ val if val is not none else
+                  'Attr Not Found' }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = state_attr('sensor.stat_mean_temperature_soil', 'max_24') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+              - type: custom:mushroom-template-card
+                entity: sensor.ss_e139_temperature
+                name: ''
+                grid_options:
+                  columns: 3
+                  rows: 1
+                primary: >
+                  {% set val = states('sensor.ss_e139_temperature') |
+                  float(none) %} {{ val if val is not none else 'Attr Not Found'
+                  }}
+                secondary_info: none
+                card_mod:
+                  style:
+                    ha-tile-info$: |
+                      .primary {
+                        color: white !important;
+                        font-size: 24px !important;
+                      }
+                    .: |
+                      ha-card {
+                        {% set val = states('sensor.ss_e139_temperature') | float(none) %} 
+                        {% if val is none %}
+                          background: #404040 !important;
+                        {% elif val < 18.0 %}
+                          background: rgba(0, 204, 255, 0.6) !important;
+                        {% elif val < 18.5 %}
+                          background: rgba(0, 255, 204, 0.6) !important;
+                        {% elif val < 19.0 %}
+                          background: rgba(204, 255, 0, 0.6) !important;
+                        {% elif val < 19.5 %}
+                          background: rgba(255, 255, 0, 0.6) !important;
+                        {% elif val < 20.0 %}
+                          background: rgba(255, 204, 0, 0.6) !important;
+                        {% elif val < 20.5 %}
+                          background: rgba(255, 102, 0, 0.6) !important;
+                        {% else %}
+                          background: rgba(255, 0, 0, 0.6) !important;
+                        {% endif %}
+
+
+                        
+                        /* This hides the icon container space */
+                        --icon-size: 0px;
+
+                        text-align: center;
+                        align-items: center;
+                      }    
+            columns: 4
+      - type: grid
+        cards:
+          - type: heading
             heading: Greenhouse
             heading_style: subtitle
             icon: mdi:flower
@@ -2875,7 +3079,7 @@ views:
     cards: []
   - type: sections
     max_columns: 4
-    title: ATC battery voltages
+    title: BT Home battery voltages
     path: atc-battery-voltages
     icon: mdi:battery
     sections:
@@ -2917,6 +3121,11 @@ views:
                   options:
                     name: Kitchen
                     color: yellowgreen
+                - entity_id: sensor.ss_e139_voltage
+                  options:
+                    name: soil
+                    color: coral
+                    yaxis_id: high_voltage
             card:
               type: custom:apexcharts-card
               config_templates: grey_grid
@@ -2931,15 +3140,27 @@ views:
                 type: line
                 curve: stepline
                 stroke_width: 1
+                yaxis_id: standard
                 statistics:
                   type: mean
                   period: day
               yaxis:
-                - min: 2.5
+                - id: standard
+                  min: 2
                   max: 3
+                  decimals: 1
+                  apex_config:
+                    tickAmount: 5
+                - id: high_voltage
+                  opposite: true
+                  min: 6
+                  max: 8.5
                   decimals: 1
                   apex_config:
                     tickAmount: 5
               apex_config:
                 legend:
                   show: true
+                chart:
+                  height: 400px
+
