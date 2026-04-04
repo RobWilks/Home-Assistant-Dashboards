@@ -1,0 +1,39 @@
+  - trigger:
+      trigger: time
+      at: "02:00:00"
+    sensor:
+      - name: "gridExportStart"
+        unique_id: 13f8f5c1-6beb-4a3b-9841-96150f734709
+        unit_of_measurement: "kWh"
+        state: >
+          {% set result = states.sensor.wilkinsonsolar_site_export.state | float(0) %}
+          {{(result)}}    
+
+      - name: "gridImportStart"
+        unique_id: a9a20fc2-30d2-439c-83a9-0c0052ffb2ae
+        unit_of_measurement: "kWh"
+        state: >
+          {% set result = states.sensor.wilkinsonsolar_site_import.state | float(0) %}
+          {{(result)}}    
+          
+          
+  - sensor:
+        # Grid Import Power Sensor
+        - name: "Grid Import Power"
+          unique_id: 9ed55e85-581c-4fbe-9973-8e3a24148138
+          state_class: measurement
+          unit_of_measurement: "kW"
+          device_class: power
+          state: >
+            {% set pwr = states('sensor.wilkinsonsolar_site_power') | float(0) %}
+            {{ [0, pwr] | max }}
+  
+        # Grid Export Power Sensor
+        - name: "Grid Export Power"
+          unique_id: 4051a378-ff74-477c-bc30-4b27f0a04e0f
+          state_class: measurement
+          unit_of_measurement: "kW"
+          device_class: power
+          state: >
+            {% set pwr = states('sensor.wilkinsonsolar_site_power') | float(0) %}
+            {{ [0, 0 - pwr] | max }}          

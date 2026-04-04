@@ -491,52 +491,54 @@ automation soundDoorBell:
 automation doorBellPrivacyOn:
   - alias: "privacyOn"
     id: "automation_11"
+    description: "Turn on privacy if alarm is unset or if phone joined home LAN"
     trigger:
       - platform: state
-        entity_id: binary_sensor.all_pir_sensors
-        from: "on"
-        to: "off"
-        # PIR sensors break their circuit when triggered
+        entity_id: binary_sensor.ping_a50_lan
+        to: "on"
+      - platform: state
+        entity_id: sensor.sm_a505fn_wi_fi_connection
+        to: 
+          - "CountyBB-B970B0_EXT"
+          - "CountyBB-B970B0"
       - platform: state
         entity_id: input_boolean.alarm_set
         to: "off"   
     condition:
       - condition: state
+        entity_id: input_boolean.dummyprivacyswitch
+        state: "off"
+      - condition: state
         entity_id: input_boolean.alarm_set
         state: "off"
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: binary_sensor.all_pir_sensors
-            state: "on"
-          - condition: template
-            # Checks if the PIR group was last changed less than 600 seconds (10 mins) ago
-            value_template: >
-              {{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.all_pir_sensors.last_changed)) < 600 }}             
     action:
-      - service: switch.turn_on
+      - service: homeassistant.turn_on
         target:
-          entity_id: switch.doorbell_privacy      
-    mode: restart #if triggered several times reset the delay countdown
+          entity_id: input_boolean.dummyprivacyswitch      
+    mode: single
 
 automation doorBellPrivacyOff:
     alias: "privacyOff"
-    id: "automation_11b"
-    description: "Turn off privacy if alarm is set or no motion for 30 mins"
+    id: "automation_19"
+    description: "Turn off privacy if alarm is set or if phone not on home LAN"
     trigger:
+      - platform: state
+        entity_id: binary_sensor.ping_a50_lan
+        to: "off"    
+        for:
+          seconds: 60  # The "anti-flicker" buffer        
       - platform: state
         entity_id: input_boolean.alarm_set
         to: "on"
-      - platform: state
-        entity_id: binary_sensor.all_pir_sensors
-        to: "on"
-        for:
-          minutes: 30
+    condition:
+      - condition: state
+        entity_id: input_boolean.dummyprivacyswitch
+        state: "on"
     action:
-      - service: switch.turn_off
+      - service: homeassistant.turn_off
         target:
-          entity_id: switch.doorbell_privacy
-    mode: parallel
+          entity_id: input_boolean.dummyprivacyswitch
+    mode: single
 
 
 automation porchLightOn:
@@ -628,28 +630,10 @@ automation all lights off:
 automation trigger alarm:
   - alias: "trigger_alarm"    
     id: "automation_16"
-    triggers:    
-      - trigger: state
-        entity_id: binary_sensor.alarmsensor_5d1b24_hall_pir_front_door_contact
-        from: "on"   
-      - trigger: state
-        entity_id: binary_sensor.alarmsensor_5d1b24_kitchen_pir
-        from: "on"           
-      - trigger: state
-        entity_id: binary_sensor.alarmsensor_5d1b24_landing_pir
-        from: "on"     
-      - trigger: state
-        entity_id: binary_sensor.alarmsensor_5d1b24_lounge_pir_contact
-        from: "on"     
-      - trigger: state
-        entity_id: binary_sensor.alarmsensor_5d1b24_music_room_pir
-        from: "on"     
-      - trigger: state
-        entity_id: binary_sensor.alarmsensor_5d1b24_playroom_pir
-        from: "on"    
-      - trigger: state
-        entity_id: binary_sensor.alarmsensor_5d1b24_utility_room_contact
-        from: "on"  
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.pir_sensors_combined
+        to: "on"
     conditions:
       - and:
         - condition: template
@@ -759,7 +743,6 @@ recorder:
       - weather
       - zone 
     entity_globs:             #globs is a key to denote wildcard pattern
-      - sensor.adc_*          #tests on esp32 adc
       - sensor.random_*       #random times for lights when away    
       - sensor.energy_*       #short-term forecast data
       - sensor.octopus_energy_electricity_19m1039794_1050003203800_*  #information on tariffs

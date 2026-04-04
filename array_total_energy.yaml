@@ -1,0 +1,17 @@
+- platform: integration
+  source: sensor.sumwestarray
+  name: West Array Total Energy
+  # 'left' is recommended for solar to avoid overestimating during spikes
+  method: left
+  
+- platform: integration
+  source: sensor.sumsoutharray
+  name: South Array Total Energy
+  # 'left' is recommended for solar to avoid overestimating during spikes
+  method: left  
+  
+- platform: integration
+  source: sensor.sumeastarray
+  name: East Array Total Energy
+  # 'left' is recommended for solar to avoid overestimating during spikes
+  method: left  

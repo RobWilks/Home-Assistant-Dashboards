@@ -1,0 +1,3 @@
+{% set gridExport = states.sensor.wilkinsonsolar_site_export.state | float(0) %}
+{% set gridExportStart = states.sensor.gridExportStart.state | float(0) %} 
+{{(gridExport - gridExportStart)|round(1, default = "unknown")}}

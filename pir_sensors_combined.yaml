@@ -1,0 +1,14 @@
+- binary_sensor:
+      - name: "PIR Activity Combined"
+        device_class: motion
+        state: >
+          {% set pirs = [
+            'binary_sensor.alarmsensor_5d1b24_hall_pir_front_door_contact',
+            'binary_sensor.alarmsensor_5d1b24_kitchen_pir',
+            'binary_sensor.alarmsensor_5d1b24_landing_pir',
+            'binary_sensor.alarmsensor_5d1b24_lounge_pir_contact',
+            'binary_sensor.alarmsensor_5d1b24_music_room_pir',
+            'binary_sensor.alarmsensor_5d1b24_playroom_pir',
+            'binary_sensor.alarmsensor_5d1b24_utility_room_contact'
+          ] %}
+          {{ expand(pirs) | selectattr('state', 'eq', 'off') | list | count > 0 }}
