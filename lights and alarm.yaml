@@ -38,15 +38,9 @@ views:
           - type: custom:mushroom-light-card
             name: Music Room Light One
             entity: switch.music_room_light_one
-          - type: custom:mushroom-light-card
-            entity: input_boolean.awayfromhome
-            name: Yellow = away
-          - type: custom:mushroom-light-card
-            entity: device_tracker.sm_a505fn
-            name: Where's Rob?
           - type: custom:mushroom-media-player-card
             entity: media_player.speakers
-            name: Mouche
+            name: Moosh
       - type: vertical-stack
         cards:
           - type: entities
@@ -230,3 +224,34 @@ views:
       - type: map
         entities:
           - entity: device_tracker.sm_a505fn
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Ping Phones on LAN
+            show_header_toggle: false
+            state_color: false
+            entities:
+              - entity: binary_sensor.ping_a50_lan
+                type: custom:multiple-entity-row
+                name: Robs A50
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      state-badge { color: DeepSkyBlue !important; }
+                entities:
+                  - attribute: last_changed
+                    format: relative
+                    name: " "
+                    styles:
+                      color: DeepSkyBlue
+                  - entity: binary_sensor.ping_a50_lan
+                    name: " "
+                    styles:
+                      color: DeepSkyBlue
+          - type: custom:mushroom-light-card
+            entity: input_boolean.awayfromhome
+            name: Yellow = away
+          - type: custom:mushroom-light-card
+            entity: device_tracker.sm_a505fn
+            name: Where's Rob?                             

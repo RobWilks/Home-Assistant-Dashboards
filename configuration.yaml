@@ -499,46 +499,60 @@ automation doorBellPrivacyOn:
       - platform: state
         entity_id: sensor.sm_a505fn_wi_fi_connection
         to: 
-          - "CountyBB-B970B0_EXT"
           - "CountyBB-B970B0"
       - platform: state
         entity_id: input_boolean.alarm_set
         to: "off"   
     condition:
       - condition: state
-        entity_id: input_boolean.dummyprivacyswitch
+        entity_id: switch.doorbell_privacy
         state: "off"
       - condition: state
         entity_id: input_boolean.alarm_set
         state: "off"
     action:
-      - service: homeassistant.turn_on
+      - service: switch.turn_on
         target:
-          entity_id: input_boolean.dummyprivacyswitch      
+          entity_id: switch.doorbell_privacy      
     mode: single
 
+# Turn off privacy if alarm is set or if phone not on home LAN
 automation doorBellPrivacyOff:
-    alias: "privacyOff"
-    id: "automation_19"
-    description: "Turn off privacy if alarm is set or if phone not on home LAN"
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.ping_a50_lan
-        to: "off"    
-        for:
-          seconds: 60  # The "anti-flicker" buffer        
-      - platform: state
-        entity_id: input_boolean.alarm_set
-        to: "on"
-    condition:
-      - condition: state
-        entity_id: input_boolean.dummyprivacyswitch
-        state: "on"
-    action:
-      - service: homeassistant.turn_off
-        target:
-          entity_id: input_boolean.dummyprivacyswitch
-    mode: single
+  alias: "privacyOff"
+  id: "automation_19"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alarm_set
+      to: "on"
+      id: "alarm_set"   # Tagging this trigger
+    - platform: state
+      entity_id: binary_sensor.ping_a50_lan
+      to: "off"
+      for:
+        seconds: 60  # The "anti-flicker" buffer
+      id: "phone_left"  # Tagging this trigger
+  condition:
+    - condition: state
+      entity_id: switch.doorbell_privacy
+      state: "on"
+    - condition: or
+      conditions:
+        # Path A: If the alarm was set, proceed immediately
+        - condition: trigger
+          id: "alarm_set"
+        # Path B: If the phone left, only proceed if the Hall PIR was the last tripped
+        - condition: and
+          conditions:
+            - condition: trigger
+              id: "phone_left"
+            - condition: template
+              value_template: >
+                {{ state_attr('binary_sensor.pir_activity_combined', 'last_triggered_by') == 'Alarmsensor-5D1B24 hall PIR front door contact' }}
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.doorbell_privacy
+  mode: single
 
 
 automation porchLightOn:
@@ -632,7 +646,7 @@ automation trigger alarm:
     id: "automation_16"
     trigger:
       - platform: state
-        entity_id: binary_sensor.pir_sensors_combined
+        entity_id: binary_sensor.pir_activity_combined
         to: "on"
     conditions:
       - and:

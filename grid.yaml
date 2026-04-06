@@ -1,3 +1,5 @@
+# Four grid sensors to track import/export at the start of each day, and power at any time
+# Rectifying grid power flow so that import and export are always positive values or zero
   - trigger:
       trigger: time
       at: "02:00:00"

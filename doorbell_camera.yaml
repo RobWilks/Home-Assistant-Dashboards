@@ -1,0 +1,40 @@
+views:
+  - title: Home
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: doorbellCamera
+          - type: tile
+            entity: light.doorbell_floodlight_timed
+            name: floodlight
+          - type: tile
+            entity: switch.doorbell_privacy
+            name: privacy
+          - type: tile
+            entity: siren.doorbell_siren
+            name: siren
+      - type: grid
+        cards:
+          - type: history-graph
+            entities:
+              - entity: sensor.dooralertcount
+            hours_to_show: 168
+            title: Doorbell Activity
+          - type: logbook
+            target:
+              entity_id:
+                - binary_sensor.doorbellalert
+          - type: history-graph
+            entities:
+              - entity: sensor.doorbell_battery
+            title: Battery
+            hours_to_show: 168
+      - type: grid
+        cards:
+          - type: heading
+            heading: View East
+          - type: picture-entity
+            entity: camera.doorbell_hd_stream_direct
+        column_span: 1
+    cards: []
